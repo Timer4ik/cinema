@@ -1,10 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TestPage from '@/pages/TestPage'
+import MainPage from '@/pages/MainPage'
+import RentalPage from '@/pages/Rental'
+import RentalEditPage from '@/pages/Rental/EditPage'
 
 const routes = [{
         path: '/',
         name: 'main',
-        component: TestPage,
+        component: MainPage,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/rental',
+        name: 'rental',
+        component: RentalPage,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/rental/:id',
+        name: 'rentalEdit',
+        component: RentalEditPage,
         meta: {
             requiredAuth: false
         }

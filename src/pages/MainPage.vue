@@ -1,6 +1,10 @@
 <template>
-    <div>
-
+    <div class="wrapper">
+        <AppHeader></AppHeader>
+        <main class="main container">
+            <AppAside></AppAside>
+            <AppFilmsList></AppFilmsList>
+        </main>
     </div>
 </template>
 
