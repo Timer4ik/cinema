@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainPage from '@/pages/MainPage'
-import RentalPage from '@/pages/Rental'
-import RentalEditPage from '@/pages/Rental/EditPage'
-import AuthTestPage from '@/pages/TestPages/AuthTestPage.vue'
+
+import Films from "@/pages/Films/Films"
+import RentFilms from "@/pages/RentFilms/RentFilms" 
+
 import FormTestPage from '@/pages/TestPages/FormTestPage.vue'
 import ApiTestPage from '@/pages/TestPages/ApiTestPage.vue'
 import GridTestPage from '@/pages/TestPages/GridTestPage.vue'
@@ -12,31 +12,33 @@ const routes = [
     {
         path: '/',
         name: 'main',
-        component: MainPage,
+        component: Films,
         meta: {
             requiredAuth: false
         }
     },
+    {
+        path: '/films',
+        name: 'films',
+        component: Films,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/rentFilms',
+        name: 'rentFilms',
+        component: RentFilms,
+        meta: {
+            requiredAuth: false
+        }
+    },
+
+    
     {
         path: '/form',
         name: 'form',
         component: FormTestPage,
-    },
-    {
-        path: '/rental',
-        name: 'rental',
-        component: RentalPage,
-        meta: {
-            requiredAuth: false
-        }
-    },
-    {
-        path: '/rental/:id',
-        name: 'rentalEdit',
-        component: RentalEditPage,
-        meta: {
-            requiredAuth: false
-        }
     },
     {
         path: '/calendar',

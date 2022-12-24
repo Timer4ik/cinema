@@ -1,13 +1,14 @@
 @import './reset';
-
 .container {
-    padding: 0 19.53%;
+    width: 100%;
+    max-width: 1170px;
+    padding: 0 15px;
+    margin: 0 auto;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
-
     height: 100%;
 }
 

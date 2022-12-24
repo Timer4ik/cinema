@@ -16,12 +16,6 @@
     </ul>
 </template>
 
-<script>
-export default {
-    name: 'AppFilmsList'
-}
-</script>
-
 <script setup>
 const films = [
     {

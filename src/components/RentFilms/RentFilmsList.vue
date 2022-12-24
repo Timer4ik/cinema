@@ -43,12 +43,6 @@
     </table>
 </template>
 
-<script>
-export default {
-    name: 'AppFilmsTable'
-}
-</script>
-
 <script setup>
 const films = [
     {
