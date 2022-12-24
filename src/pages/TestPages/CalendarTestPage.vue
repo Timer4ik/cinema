@@ -55,6 +55,7 @@ import DateModel from "@/utils/date-model"
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 
 onMounted(() => {
+    
     initCalendar((calendarCell) => {
 
         if (+calendarCell.cellDate.date === +startRangeDate.value?.date) {

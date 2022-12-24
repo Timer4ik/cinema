@@ -5,7 +5,8 @@ import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "
 const PATHS = {
     FILMS: "films",
     RENT_FILMS: "films_rent",
-    USERS: "users"
+    USERS: "users",
+    SEATS: "seats"
 }
 
 export const useApiRequest = () => {
@@ -63,7 +64,9 @@ export default () => {
             return await create(PATHS.RENT_FILMS, data)
         },
 
-        // async set
+        async addSeat(data) {
+            return await create(PATHS.SEATS, data)
+        }
 
 
     }

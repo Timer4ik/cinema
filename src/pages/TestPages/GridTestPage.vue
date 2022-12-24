@@ -24,7 +24,7 @@ const seatsRows = ref([])
 onMounted(() => {
     const grid = new Grid(6)
 
-    grid.generate(seats, (item) => {
+    grid.generateGrid(seats, (item) => {
 
         let reserved = false
 
