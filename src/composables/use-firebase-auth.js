@@ -1,4 +1,4 @@
-import { db } from "@/configs/db";
+import { db } from "@/utils/firebase";
 import useUserStore from "@/composables/use-user-store"
 
 import { doc, setDoc, getDoc } from "firebase/firestore"
@@ -9,7 +9,8 @@ const auth = getAuth();
 export default () => {
     const { getUser, clearUser, setUser } = useUserStore()
 
-    const register = async({ name, email, password }) => {
+    // TMP DEVFUNC
+    const register = async ({ name, email, password }) => {
 
         const response = await createUserWithEmailAndPassword(auth, email, password)
 
@@ -20,7 +21,7 @@ export default () => {
         })
     }
 
-    const login = async({ email, password }) => {
+    const login = async ({ email, password }) => {
 
         const response = await signInWithEmailAndPassword(auth, email, password)
 
@@ -32,7 +33,7 @@ export default () => {
         setUser(user)
     }
 
-    const logout = async() => {
+    const logout = async () => {
 
         signOut(auth)
 

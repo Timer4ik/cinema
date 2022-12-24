@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
-import useUserStore from "@/composables/use-user-store";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBM23f6x20ecOiXwHix6rODJWU-ekD_nC4",
