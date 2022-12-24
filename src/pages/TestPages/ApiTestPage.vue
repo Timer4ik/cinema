@@ -10,7 +10,6 @@ import { onMounted } from 'vue';
 
 const { getFilms, addFilm, updateFilm, getFilmById } = useApi()
 
-
 onMounted(async () => {
 
   // const newFilm = new RentFilmModel({

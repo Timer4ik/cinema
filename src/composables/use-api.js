@@ -63,6 +63,8 @@ export default () => {
             return await create(PATHS.RENT_FILMS, data)
         },
 
+        // async set
+
 
     }
 }

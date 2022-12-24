@@ -41,19 +41,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 1 1 100%;
+    flex: 0 0 30%;
 
-    padding: 60px 28px;
+    padding: 15px;
+    padding-top: 30px;
 
     height: 100%;
-
-    max-width: 350px;
 
     .list {
         display: flex;
         flex-direction: column;
-        row-gap: 22px;
-
+        .item {
+        margin-bottom: 15px;
+        }
         .item__link {
             background-color: #184158;
 

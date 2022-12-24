@@ -75,8 +75,6 @@ const films = [
     border: 1px solid black;
     border-spacing: 0;
 
-    margin: 60px 0;
-
     width: 100%;
 
     &__th,

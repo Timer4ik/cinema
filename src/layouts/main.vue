@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper container">
         <header class="header">
             <div class="container">
                 <div class="header__container">
@@ -11,9 +11,11 @@
                 </div>
             </div>
         </header>
-        <main class="main container">
+        <main class="main">
             <Navigation/>
-            <slot />
+            <div class="content">
+                <slot />
+            </div>
         </main>
         <footer>
             SomeFooter
@@ -37,6 +39,8 @@ import Navigation from "@/components/Base/Navigation.vue"
 
     height: 122px;
 
+    padding: 0 15px;
+
     &__container {
         display: flex;
         align-items: center;
@@ -48,5 +52,10 @@ import Navigation from "@/components/Base/Navigation.vue"
         font-size: 40px;
     }
 }
-
+.main {
+    .content {
+        padding: 15px;
+        flex: 1 1 auto;
+    }
+}
 </style>

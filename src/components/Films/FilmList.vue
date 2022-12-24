@@ -53,17 +53,18 @@ const films = [
 
 <style lang="scss" scoped>
 .films {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 48px 70px;
-    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
     font-weight: 700;
-
-    padding: 60px 0;
 }
 
 .film {
+
+    padding-right: 15px;
+    margin-bottom: 30px;
+
     &:hover {
         .film__image {
             &::before {
@@ -78,6 +79,7 @@ const films = [
 
     &__image {
         position: relative;
+        width: 100%;
 
         &::before {
             background-color: transparent;
@@ -97,7 +99,7 @@ const films = [
             transition: 200ms;
 
             text-align: center;
-            
+
             opacity: 0;
 
             width: 100%;
