@@ -1,14 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import MainPage from '@/pages/MainPage'
+import RentalPage from '@/pages/Rental'
+import RentalEditPage from '@/pages/Rental/EditPage'
 import AuthTestPage from '@/pages/TestPages/AuthTestPage.vue'
 import FormTestPage from '@/pages/TestPages/FormTestPage.vue'
 import ApiTestPage from '@/pages/TestPages/ApiTestPage.vue'
 import GridTestPage from '@/pages/TestPages/GridTestPage.vue'
 import CalendarTestPage from '@/pages/TestPages/CalendarTestPage.vue'
 
-const routes = [{
-        path: '/auth',
-        name: 'auth',
-        component: AuthTestPage,
+const routes = [
+    {
+        path: '/',
+        name: 'main',
+        component: MainPage,
         meta: {
             requiredAuth: false
         }
@@ -17,6 +21,19 @@ const routes = [{
         path: '/form',
         name: 'form',
         component: FormTestPage,
+    },
+    {
+        path: '/rental',
+        name: 'rental',
+        component: RentalPage,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/rental/:id',
+        name: 'rentalEdit',
+        component: RentalEditPage,
         meta: {
             requiredAuth: false
         }
@@ -41,9 +58,6 @@ const routes = [{
         path: '/api',
         name: 'api',
         component: ApiTestPage,
-        meta: {
-            requiredAuth: false
-        }
     },
     {
         path: "/:catchAll(.*)",

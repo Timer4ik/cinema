@@ -1,0 +1,19 @@
+@import './reset';
+
+.container {
+    padding: 0 19.53%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    align-items: flex-start;
+    column-gap: 60px;
+    flex-grow: 1;
+}
