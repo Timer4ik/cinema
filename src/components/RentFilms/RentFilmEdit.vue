@@ -11,7 +11,7 @@
             </div>
 
             <div class="edit__block_dates">
-                <FieldComponent name="rentalStart" type="date" label="Дата начала проката" />
+                <FieldComponent fieldClass="aboba" name="rentalStart" type="date" label="Дата начала проката" />
                 <FieldComponent name="rentalEnd" type="date" label="Дата конца проката" />
             </div>
         </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { Form, Field } from "vee-validate"
+import { Form } from "vee-validate"
 import * as Yup from "yup";
 
 const loginValidationSchema = Yup.object().shape({

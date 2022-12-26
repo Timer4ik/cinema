@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Films from "@/pages/Films/Films"
 import RentFilms from "@/pages/RentFilms/RentFilms" 
 import SeatsGrid from "@/pages/SeatsGrid/SeatsGrid"
+import RentFilmEdit from "@/pages/RentFilmEdit/RentFilmEdit"
 
 import FormTestPage from '@/pages/TestPages/FormTestPage.vue'
 import ApiTestPage from '@/pages/TestPages/ApiTestPage.vue'
@@ -30,6 +31,14 @@ const routes = [
         path: '/rentFilms',
         name: 'rentFilms',
         component: RentFilms,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/rentFilmEdit',
+        name: 'rentFilmEdit',
+        component: RentFilmEdit,
         meta: {
             requiredAuth: false
         }

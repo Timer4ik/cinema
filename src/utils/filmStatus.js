@@ -1,4 +1,4 @@
-export default {
+const filmStatus = {
 
     PROCESS:{
         id:0,
@@ -45,3 +45,5 @@ export default {
     },
 
 }
+
+export default filmStatus

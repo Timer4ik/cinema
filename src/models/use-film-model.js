@@ -6,6 +6,6 @@ export default class FilmModel {
         this.uid = data.uid
         this.title = data.title
         this.year = data.year
-        this.image = new ImageModel(data.image)
+        this.image = data?.image ? new ImageModel(data.image) : null
     }
 }

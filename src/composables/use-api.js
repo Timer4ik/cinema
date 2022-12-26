@@ -6,7 +6,9 @@ const PATHS = {
     FILMS: "films",
     RENT_FILMS: "films_rent",
     USERS: "users",
-    SEATS: "seats"
+    SEATS: "seats",
+
+    TMP_RENTFILM:"rent_film"
 }
 
 export const useApiRequest = () => {

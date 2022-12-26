@@ -36,7 +36,7 @@
                         notSelectedDate: cell.notThisMonth,
                         isRangeEndDate: cell.isRangeEndDate,
                         isRangeStartDate: cell.isRangeStartDate,
-                        isRangeBetweenDate: cell.isRangeBetweenDate
+                        isRangeBetweenDate: cell.isRangeBetweenDate,
                     }" @click="selectRange(cell.cellDate)">
                         {{ cell.cellDate.day }}
                     </div>
