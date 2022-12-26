@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Films from "@/pages/Films/Films"
 import RentFilms from "@/pages/RentFilms/RentFilms" 
+import SeatsGrid from "@/pages/SeatsGrid/SeatsGrid"
 
 import FormTestPage from '@/pages/TestPages/FormTestPage.vue'
 import ApiTestPage from '@/pages/TestPages/ApiTestPage.vue'
@@ -33,8 +34,16 @@ const routes = [
             requiredAuth: false
         }
     },
+    {
+        path: '/seatsGrid',
+        name: 'seatsGrid',
+        component: SeatsGrid,
+        meta: {
+            requiredAuth: false
+        }
+    },
 
-    
+    // TestRoutes bottom
     {
         path: '/form',
         name: 'form',
@@ -61,6 +70,7 @@ const routes = [
         name: 'api',
         component: ApiTestPage,
     },
+    // TestRoutes up
     {
         path: "/:catchAll(.*)",
         redirect: '/',

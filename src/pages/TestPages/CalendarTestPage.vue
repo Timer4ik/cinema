@@ -79,7 +79,7 @@ onMounted(() => {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .calendar {
     height: 100vh;
 

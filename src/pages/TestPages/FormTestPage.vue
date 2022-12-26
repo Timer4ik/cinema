@@ -1,9 +1,22 @@
 <template>
   <div class="card">
     <Form :validation-schema="loginValidationSchema" @submit="handleSubmit">
-      <FieldComponent name="email" placeholder="Введите email" label="Email" />
-      <FieldComponent name="password" placeholder="Введите пароль" label="Введите пароль" />
-      <FieldComponent name="birthDate" type="date" placeholder="Введите дату рождения" label="Дата рождения" />
+      <FieldComponent
+        name="email"
+        placeholder="Введите email"
+        label="Email"
+      />
+      <FieldComponent
+        name="password"
+        placeholder="Введите пароль"
+        label="Введите пароль"
+      />
+      <FieldComponent
+        name="birthDate"
+        type="date"
+        placeholder="Введите дату рождения"
+        label="Дата рождения"
+      />
       <button>Отправить</button>
     </Form>
   </div>
@@ -18,7 +31,7 @@ import FieldComponent from "@/components/Form/FieldComponent.vue";
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required("Введите email").email("Некорректный e-mail"),
   password: Yup.string().required("Введите пароль"),
-  birthDate: Yup.string().required("Введите дату рождения")
+  birthDate: Yup.string().required("Введите дату рождения"),
 });
 
 const handleSubmit = (values) => {
@@ -60,7 +73,6 @@ const handleSubmit = (values) => {
 
     &.error {
       border-bottom: 1px solid red;
-
     }
   }
 

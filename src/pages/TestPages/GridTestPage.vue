@@ -43,7 +43,7 @@ onMounted(() => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cinema {
     height: 100vh;
 

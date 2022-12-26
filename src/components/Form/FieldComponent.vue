@@ -1,30 +1,43 @@
 <template>
-  <div class="form__field field">
-    <Field validateOnInput :model-value="value" :name="name" :id="name"
-      v-slot="{ field, errorMessage }">
+  <Field
+    validateOnInput
+    :model-value="value"
+    :name="name"
+    :id="name"
+    v-slot="{ field, errorMessage }"
+  >
+    <div class="form__field field" :class="fieldClass">
       <label class="field__label" :class="{ error: errorMessage }">
         {{ label }}
       </label>
 
-      <input :="field" :placeholder="placeholder" :type="type" class="field__input" :class="{ error: errorMessage }" />
+      <input
+        v-bind="field"
+        :placeholder="placeholder"
+        :type="type"
+        class="field__input"
+        :class="{ error: errorMessage }"
+      />
 
       <div class="field__error">{{ errorMessage }}</div>
-    </Field>
-  </div>
+    </div>
+  </Field>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
 import { Field } from "vee-validate";
 
+defineEmits(["onClick","onChange"])
+
 defineProps({
   label: {
     type: String,
     required: false,
   },
-  type:{
+  type: {
     type: String,
-    default:"text"
+    default: "text",
   },
   name: {
     type: String,
@@ -36,6 +49,12 @@ defineProps({
     defalut: "",
   },
   placeholder: {
+    type: String,
+    required: false,
+    defalut: "",
+  },
+
+  fieldClass: {
     type: String,
     required: false,
     defalut: "",
