@@ -34,6 +34,9 @@ export const useApiRequest = () => {
         async update(path, data) {
             await setDoc(doc(db, path, data.uid), getObjectFromModel(data))
         },
+        async deleted(path, id) {
+            await deleteDoc(doc(db, path, id));
+        }
     }
 }
 
