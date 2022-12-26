@@ -67,8 +67,11 @@ export default () => {
             return await create(PATHS.RENT_FILMS, data)
         },
 
-        async addSeat(data) {
-            return await create(PATHS.SEATS, data)
+        async getSeats(condition) {
+            return await request(PATHS.SEATS, condition)
+        },
+        async updateSeat(data) {
+            return await update(PATHS.SEATS, data)
         }
 
 

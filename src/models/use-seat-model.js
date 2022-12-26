@@ -5,10 +5,9 @@ export default class SeatModel {
 
         // Премиум место | 
         this.status = data.status
-        this.seatNumber = data.seatNumber
         this.row = data.row
         this.col = data.col
-        this.seatPrice = data.searPrice
+        this.price = data.price
     }
 
 }
