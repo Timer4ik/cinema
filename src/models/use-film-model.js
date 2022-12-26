@@ -2,10 +2,10 @@ import ImageModel from "./use-image-model"
 
 export default class FilmModel {
 
-    constructor(date) {
-        this.uid = date.uid
-        this.title = date.title
-        this.year = date.year
-        this.image = new ImageModel(date.image)
+    constructor(data) {
+        this.uid = data.uid
+        this.title = data.title
+        this.year = data.year
+        this.image = new ImageModel(data.image)
     }
 }

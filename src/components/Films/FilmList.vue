@@ -17,53 +17,62 @@
 </template>
 
 <script setup>
-const films = [
-    {
-        id: 1,
-        title: 'title',
-        image: 'film.png',
-        date: '2022 г'
-    },
-    {
-        id: 2,
-        title: 'title',
-        image: 'film.png',
-        date: '2022 г'
-    },
-    {
-        id: 3,
-        title: 'title',
-        image: 'film.png',
-        date: '2022 г'
-    },
-    {
-        id: 4,
-        title: 'title',
-        image: 'film.png',
-        date: '2022 г'
-    },
-    {
-        id: 5,
-        title: 'title',
-        image: 'film.png',
-        date: '2022 г'
-    }
-];
+import { useFilms } from '@/composables/use-films';
+
+const { films, fetchFilms } = useFilms({
+    height: 100
+})
+
+fetchFilms();
+console.log(films)
+
+// const films = [
+//     {
+//         id: 1,
+//         title: 'title',
+//         image: 'film.png',
+//         date: '2022 г'
+//     },
+//     {
+//         id: 2,
+//         title: 'title',
+//         image: 'film.png',
+//         date: '2022 г'
+//     },
+//     {
+//         id: 3,
+//         title: 'title',
+//         image: 'film.png',
+//         date: '2022 г'
+//     },
+//     {
+//         id: 4,
+//         title: 'title',
+//         image: 'film.png',
+//         date: '2022 г'
+//     },
+//     {
+//         id: 5,
+//         title: 'title',
+//         image: 'film.png',
+//         date: '2022 г'
+//     }
+// ];
 </script>
 
 <style lang="scss" scoped>
 .films {
     display: flex;
     flex-wrap: wrap;
+    grid-gap: 30px 15px;
     justify-content: center;
 
     font-weight: 700;
 }
 
 .film {
-
-    padding-right: 15px;
-    margin-bottom: 30px;
+    // padding-right: 15px;
+    // margin-bottom: 30px;
 
     &:hover {
         .film__image {
