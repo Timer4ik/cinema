@@ -27,6 +27,5 @@ onMounted(async () => {
     uid:"NqdAiAZmXHOednpWa238",
     name: "new updated"
   })
-  console.log(await getFilmById("PeBe6zjv8Pdx448uni1w"))
 })
 </script>

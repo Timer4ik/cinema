@@ -19,7 +19,6 @@ const handleSubmit = async () => {
 
 onMounted(async () => {
     await fetchFilms()
-    console.log(films.value);
 })
 
 </script>
