@@ -2,22 +2,22 @@
   <div class="seat__status status">
     <button
       class="status cheap"
-      @click="setActiveStatus(0)"
-      :class="{ active: seatStatus === 0 }"
+      @click="setActiveButton(0)"
+      :class="{ active: seatStatus === SeatStatus.CHEAP.id }"
     >
       Бюджетное место
     </button>
     <button
       class="status default"
-      @click="setActiveStatus(1)"
-      :class="{ active: seatStatus === 1 }"
+      @click="setActiveButton(1)"
+      :class="{ active: seatStatus === SeatStatus.STANDARD.id }"
     >
       Стандартное место
     </button>
     <button
       class="status premium"
-      @click="setActiveStatus(2)"
-      :class="{ active: seatStatus === 2 }"
+      @click="setActiveButton(2)"
+      :class="{ active: seatStatus === SeatStatus.EXPENSIVE.id }"
     >
       Премиум место
     </button>
@@ -45,21 +45,19 @@
             <div class="cell row">Ряд 4</div>
           </td>
         </tr>
-        
       </tbody>
     </table>
     <table class="cinema">
       <tbody class="cinema_table">
         <tr v-for="(row, idx) in seatsRows" :key="idx">
-          <td v-for="seat in row" :key="seat.id">
+          <td v-for="seat in row" :key="seat.uid">
             <div
               class="cell"
-              @click="setActiveSeat(seat)"
+              @click="setSeatStatus(seat)"
               :class="{
-                active: seat?.active,
-                default: seat.status === 1 && seat?.active,
-                cheap: seat.status === 0 && seat?.active,
-                premium: seat.status === 2 && seat?.active,
+                default: seat.status === 1,
+                cheap: seat.status === 0,
+                premium: seat.status === 2,
               }"
             >
               {{ seat.col }}
@@ -69,48 +67,30 @@
       </tbody>
     </table>
   </div>
+  <button @click="handleSubmit">Сохранить</button>
 </template>
 
 <script setup>
-import Grid from "@/utils/grid";
 import { onMounted, ref } from "vue";
+import SeatStatus from "@/utils/seatStatus";
+import useSeatsGrid from "@/composables/use-seats-grid";
+import useApi from "@/composables/use-api";
 
-const rows = 4;
-const cols = 5;
+const { seatsRows, initSeatsGrid, setSeatStatus, seatStatus, setSeats } =
+  useSeatsGrid();
 
-const seatsRows = ref([]);
-
-const seatStatus = ref(0);
-
-const generateSeats = () => {
-  const seats = [];
-  for (let i = 1; i <= rows; i++) {
-    for (let j = 1; j <= cols; j++) {
-      seats.push({ col: j, row: i });
-    }
-  }
-  return seats;
+const setActiveButton = (status) => {
+  seatStatus.value = status;
 };
 
-const setActiveSeat = (seat) => {
-  seat.active = !seat.active;
-  seat.status = seatStatus.value;
-};
-const setActiveStatus = (seat) => {
-  seatStatus.value = seat;
+const handleSubmit = async () => {
+  const { updateSeat } = useApi();
+
+  await setSeats(seatsRows.value);
 };
 
-onMounted(() => {
-  const grid = new Grid(cols);
-
-  grid.generateGrid(generateSeats(), (item) => {
-    return {
-      id: Date.now(),
-      ...item,
-    };
-  });
-
-  seatsRows.value = grid.rows;
+onMounted(async () => {
+  initSeatsGrid();
 });
 </script>
 
@@ -149,17 +129,16 @@ onMounted(() => {
     color: white;
   }
 
-  &.active {
-    color: white;
-    opacity: 1;
-  }
   &.default {
+    opacity: 1;
     background-color: rgb(41, 180, 134);
   }
   &.cheap {
+    opacity: 1;
     background-color: rgb(59, 59, 59);
   }
   &.premium {
+    opacity: 1;
     background-color: rgb(255, 239, 13);
   }
 }
