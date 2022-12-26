@@ -1,9 +1,9 @@
 <template>
-    <Form class="edit" :validation-schema="loginValidationSchema" @submit="handleSubmit">
+    <Form class="edit" :validation-schema="ValidationSchema" @submit="handleSubmit">
         <div class="edit__title">
             Обработка фильма для проката
         </div>
-        <FieldComponent class="edit__select-film" name="text" placeholder="Человек паук" label="Выбранный фильм" />
+        <FieldComponent name="name" class="edit__select-film" placeholder="Человек паук" label="Выбранный фильм" />
 
         <div class="edit__block edit__block_first">
             <div class="edit__title edit__title_second">
@@ -29,6 +29,18 @@
             </div>
         </div>
 
+        <div class="edit__block edit__block_third">
+            <div class="edit__title edit__title_third">
+                Дополнительная информация
+            </div>
+
+            <div class="edit__block_info">
+                <FieldComponent name="price" type="number" label="Цена" />
+                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2" />
+                <FieldComponent name="description" label="Описание" />
+            </div>
+        </div>
+
         <button class="edit__save">
             Сохранить
         </button>
@@ -39,16 +51,22 @@
 import { Form } from "vee-validate"
 import * as Yup from "yup";
 
-const loginValidationSchema = Yup.object().shape({
-  email: Yup.string().required("Введите email").email("Некорректный e-mail"),
-  password: Yup.string().required("Введите пароль"),
-  birthDate: Yup.string().required("Введите дату рождения")
+const ValidationSchema = Yup.object().shape({
+    name: Yup.string().required("Введите название"),
+    rentalStart: Yup.string().required("Введите дату начало проката"),
+    rentalEnd: Yup.string().required("Введите дату окончание проката"),
+    sessionFirst: Yup.string().required("Введите время"),
+    sessionSecond: Yup.string().required("Введите время"),
+    sessionThird: Yup.string().required("Введите время"),
+    sessionFourth: Yup.string().required("Введите время"),
+    price: Yup.string().required("Введите цену"),
+    description: Yup.string().required("Введите описание"),
 });
 
 const handleSubmit = (values) => {
-  const { email, password } = values;
-  console.log({ email, password });
-  // ...fetchData({email,password})
+    const { email, password } = values;
+    console.log({ email, password });
+    // ...fetchData({email,password})
 };
 </script>
 

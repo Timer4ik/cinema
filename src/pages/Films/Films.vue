@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <FilmList :films="films"></FilmList>
+        <FilmList :films="films" @addedRentFilm="addedRentFilm"></FilmList>
     </MainLayout>
 </template>
 
@@ -12,6 +12,10 @@ import { onMounted, ref } from 'vue';
 const { films, fetchFilms } = useFilms()
 
 const searchText = ref("")
+
+function addedRentFilm(data) {
+    console.log(data);
+}
 
 const handleSubmit = async () => {
     await fetchFilms(["title", "==", searchText.value])
