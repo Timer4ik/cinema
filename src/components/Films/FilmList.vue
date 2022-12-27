@@ -1,12 +1,9 @@
 <template>
     <ul class="films">
         <li v-for="film in films" :key="film.id" class="films__item film">
-            <div @click="addRentFilm(film)" class="film__rent-add">
-                <div v-if="film?.image?.url" class="film__image">
+            <div @click="$emit('addRentFilm', film)" class="film__rent-add">
+                <div class="film__image">
                     <img :src="film?.image?.url" alt="" />
-                </div>
-                <div v-else class="film__image">
-                    <img :src="require(`@/assets/film.png`)" alt="" />
                 </div>
             </div>
             <div class="film__text">
@@ -26,13 +23,6 @@ defineProps({
     films: Array,
 })
 
-const emit = defineEmits([
-    'click'
-])
-
-function addRentFilm(data) {
-    emit('addedRentFilm', data)
-}
 </script>
 
 <style lang="scss" scoped>

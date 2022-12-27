@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <FilmList :films="films" @addedRentFilm="addedRentFilm"></FilmList>
+        <FilmList :films="films" @addRentFilm="addRentFilm"></FilmList>
     </MainLayout>
 </template>
 
@@ -13,7 +13,7 @@ const { films, fetchFilms } = useFilms()
 
 const searchText = ref("")
 
-function addedRentFilm(data) {
+function addRentFilm(data) {
     console.log(data);
 }
 
