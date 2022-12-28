@@ -29,7 +29,9 @@
                     {{ rentFilm.status }}
                 </td>
                 <td class="film__td">
-                    {{ rentFilm.rentStartDate }}-{{ rentFilm.rentEndDate }}
+                    {{ rentFilm.rentStartDate?.date ? rentFilm.rentStartDate?.date : '' }}
+                    -
+                    {{ rentFilm.rentEndDate?.date ? rentFilm.rentEndDate?.date : '' }}
                 </td>
                 <td class="film__td">
                     <ul class="film__date-rental">

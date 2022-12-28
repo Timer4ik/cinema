@@ -22,6 +22,6 @@ export default class FilmRentModel extends FilmModel {
     }
 
     get sessionTimes() {
-        return this._sessionTimes && this._sessionTimes.split(",")
+        return this._sessionTimes ? this._sessionTimes.split(",") : null
     }
 }

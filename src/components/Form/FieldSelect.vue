@@ -23,7 +23,7 @@
           class="field__option"
           v-for="option in options"
           @key="option.id"
-          @click="() => value = clickOption(option)"
+          @click="clickOption(option)"
         >
           {{ option.rus }}
         </li>
@@ -76,9 +76,29 @@ const clickSelect = (isActive) => {
 
 const clickOption = (option) => {
   emit('selected', option)
+  
   clickSelect(false)
-
-  return option.rus
 }
 </script>
-  
+
+<style lang="scss" scoped>
+.field {
+  cursor: pointer;
+
+  position: relative;
+
+  &__select {
+    background-color: #fff;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    min-width: 100%;
+  }
+
+  &__option {
+    padding: 4px;
+  }
+}
+</style>

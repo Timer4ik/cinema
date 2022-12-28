@@ -5,6 +5,7 @@ import useApi from "./use-api"
 export const useRentFilms = () => {
 
     const rentFilms = ref([])
+    const rentFilm = ref({})
 
     const fetchRentsFilm = async (condition) => {
 
@@ -13,6 +14,14 @@ export const useRentFilms = () => {
         const data = await getRentFilms(condition)
 
         rentFilms.value = data.map(film => new FilmRentModel(film))
+    }
+
+    const fetchRentFilmById = async ({id}) => {
+        const { getRentFilmById } = useApi()
+
+        const data = await getRentFilmById(id)
+
+        rentFilm.value = new FilmRentModel(data) 
     }
 
     const createRentFilm = async (condition) => {
@@ -34,6 +43,8 @@ export const useRentFilms = () => {
     return {
         rentFilms,
         fetchRentsFilm,
+        rentFilm,
+        fetchRentFilmById,
         createRentFilm,
         editRentFilm
     }

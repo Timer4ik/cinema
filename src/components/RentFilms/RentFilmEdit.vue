@@ -39,9 +39,10 @@
                 <FieldSelect
                     name="status"
                     label="Статус"
+                    :value="selectedOption?.rus"
                     :options="filmStatus"
                     @selected="setSelected"
-                    @stateActive="setActiveSelect"
+                    @stateActive="state => isActiveSelect = state"
                     :isActive="isActiveSelect"
                 ></FieldSelect>
                 <FieldComponent name="description" label="Описание" />
@@ -60,8 +61,14 @@ import { Form } from "vee-validate"
 import * as Yup from "yup";
 import filmStatus from '@/utils/filmStatus'
 import { ref } from 'vue'
+import { onMounted } from 'vue'
 
-const { editRentFilm } = useRentFilms()
+const { rentFilm, fetchRentFilmById, editRentFilm } = useRentFilms()
+
+onMounted(async () => {
+    // console.log($router)
+    //await fetchRentFilmById()
+})
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Введите название"),
@@ -77,16 +84,11 @@ const ValidationSchema = Yup.object().shape({
 })
 
 const isActiveSelect = ref(false)
-
-const setActiveSelect = (value) => {
-    //isActiveSelect.value = true
-    isActiveSelect.value = value
-    //console.log(isActiveSelect.value)
-}
+const selectedOption = ref({})
 
 const setSelected = (data) => {
     isActiveSelect.value = false
-    console.log(data)
+    selectedOption.value = data
 }
 
 const handleSubmit = async (values) => {
