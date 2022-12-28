@@ -36,7 +36,7 @@ const routes = [
         }
     },
     {
-        path: '/rentFilmEdit',
+        path: '/rentFilmEdit/:uid',
         name: 'rentFilmEdit',
         component: RentFilmEdit,
         meta: {

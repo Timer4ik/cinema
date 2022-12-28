@@ -36,7 +36,14 @@
 
             <div class="edit__block_info">
                 <FieldComponent name="price" type="number" label="Цена" />
-                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2" />
+                <FieldSelect
+                    name="status"
+                    label="Статус"
+                    :options="filmStatus"
+                    @selected="setSelected"
+                    @stateActive="setActiveSelect"
+                    :isActive="isActiveSelect"
+                ></FieldSelect>
                 <FieldComponent name="description" label="Описание" />
             </div>
         </div>
@@ -48,8 +55,13 @@
 </template>
 
 <script setup>
+import { useRentFilms } from "@/composables/use-film-rent";
 import { Form } from "vee-validate"
 import * as Yup from "yup";
+import filmStatus from '@/utils/filmStatus'
+import { ref } from 'vue'
+
+const { editRentFilm } = useRentFilms()
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Введите название"),
@@ -60,13 +72,38 @@ const ValidationSchema = Yup.object().shape({
     sessionThird: Yup.string().required("Введите время"),
     sessionFourth: Yup.string().required("Введите время"),
     price: Yup.string().required("Введите цену"),
-    description: Yup.string().required("Введите описание"),
-});
+    status: Yup.string().required("Выберите статус"),
+    description: Yup.string().required("Введите описание")
+})
 
-const handleSubmit = (values) => {
-    const { email, password } = values;
-    console.log({ email, password });
-    // ...fetchData({email,password})
+const isActiveSelect = ref(false)
+
+const setActiveSelect = (value) => {
+    //isActiveSelect.value = true
+    isActiveSelect.value = value
+    //console.log(isActiveSelect.value)
+}
+
+const setSelected = (data) => {
+    isActiveSelect.value = false
+    console.log(data)
+}
+
+const handleSubmit = async (values) => {
+    const {
+        name,
+        rentalStart,
+        rentalEnd,
+        sessionFirst,
+        sessionSecond,
+        sessionThird,
+        sessionFourth,
+        price,
+        status,
+        description
+    } = values
+
+    await editRentFilm(values)
 };
 </script>
 
