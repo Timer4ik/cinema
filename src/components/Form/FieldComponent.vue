@@ -15,6 +15,7 @@
         v-bind="field"
         :placeholder="placeholder"
         :type="type"
+        :readonly="readonly"
         class="field__input"
         :class="{ error: errorMessage }"
       />
@@ -52,6 +53,10 @@ defineProps({
     type: String,
     required: false,
     defalut: "",
+  },
+  readonly: {
+    type: String,
+    defalut: ""
   },
 
   fieldClass: {

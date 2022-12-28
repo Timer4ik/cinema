@@ -21,7 +21,7 @@ export const useRentFilms = () => {
 
         const data = await getRentFilmById(id)
 
-        rentFilm.value = new FilmRentModel(data) 
+        rentFilm.value = new FilmRentModel(data)
     }
 
     const createRentFilm = async (condition) => {

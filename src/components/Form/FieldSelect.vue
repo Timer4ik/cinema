@@ -18,7 +18,11 @@
         readonly
       >
 
-      <ul v-if="isActive" class="field__select">
+      <ul
+        class="field__select"
+        v-if="isActive"
+        v-click-away="() => clickSelect(true)"
+      >
         <li
           class="field__option"
           v-for="option in options"
