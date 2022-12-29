@@ -61,6 +61,9 @@ export default () => {
         async getRentFilms(condition) {
             return await request(PATHS.RENT_FILMS, condition)
         },
+        async getRentFilmById(id) {
+            return await requestById(PATHS.RENT_FILMS, id)
+        },
         async updateRentFilm(data) {
             return await update(PATHS.RENT_FILMS, data)
         },

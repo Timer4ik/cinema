@@ -6,15 +6,18 @@
 
 <script setup>
 import FilmList from '@/components/Films/FilmList.vue';
+import { useRentFilms } from '@/composables/use-film-rent';
 import { useFilms } from "@/composables/use-films"
 import { onMounted, ref } from 'vue';
 
 const { films, fetchFilms } = useFilms()
+const { createRentFilm } = useRentFilms()
 
 const searchText = ref("")
 
-function addRentFilm(data) {
-    console.log(data);
+async function addRentFilm(data) {
+    console.log({...data})
+    await createRentFilm({...data})
 }
 
 const handleSubmit = async () => {

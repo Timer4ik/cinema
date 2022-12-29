@@ -13,7 +13,7 @@ export default class FilmRentModel extends FilmModel {
         this.rentStartDate = new DateModel(data.rentStartDate)
         this.rentEndDate = new DateModel(data.rentEndDate)
 
-        this.price = new DateModel(data.price)
+        this.price = data.price
         // this._sessionTimes = "12:30,11:40"
         this._sessionTimes = data.sessionTimes
 
@@ -22,6 +22,6 @@ export default class FilmRentModel extends FilmModel {
     }
 
     get sessionTimes() {
-        return this._sessionTimes.split(",")
+        return this._sessionTimes ? this._sessionTimes.split(",") : null
     }
 }

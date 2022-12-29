@@ -10,8 +10,8 @@
                 <div class="film__title">
                     {{ film.title }}
                 </div>
-                <div class="film__date">
-                    {{ film.date }}
+                <div v-if="film.year" class="film__date">
+                    {{ film.year }}
                 </div>
             </div>
         </li>
@@ -20,7 +20,10 @@
 
 <script setup>
 defineProps({
-    films: Array,
+    films: {
+        type: Array,
+        required: true
+    }
 })
 
 </script>

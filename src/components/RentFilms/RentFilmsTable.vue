@@ -18,23 +18,25 @@
                     Время проката
                 </th>
             </tr>
-            <tr v-for="film in films">
+            <tr class="film__item" v-for="rentFilm in rentFilms" @key="rentFilm.uid" @click="$router.push(`/rentFilmEdit/${rentFilm.uid}`)">
                 <td class="film__td">
-                    {{ film.id }}
+                    {{ rentFilm.uid }}
                 </td>
                 <td class="film__td">
-                    {{ film.title }}
+                    {{ rentFilm.title }}
                 </td>
                 <td class="film__td">
-                    {{ film.status }}
+                    {{ rentFilm.status }}
                 </td>
                 <td class="film__td">
-                    {{ film.date_start }}-{{ film.date_end }}
+                    {{ rentFilm.rentStartDate?.date ? rentFilm.rentStartDate?.date : '' }}
+                    -
+                    {{ rentFilm.rentEndDate?.date ? rentFilm.rentEndDate?.date : '' }}
                 </td>
                 <td class="film__td">
                     <ul class="film__date-rental">
-                        <li class="film__date-rental_item" v-for="dateRentail in film.date_rental">
-                            {{dateRentail }}
+                        <li class="film__date-rental_item" v-for="dateRentail in rentFilm.sessionTimes">
+                            {{ dateRentail }}
                         </li>
                     </ul>
                 </td>
@@ -44,28 +46,12 @@
 </template>
 
 <script setup>
-const films = [
-    {
-        id: 1,
-        title: 'title',
-        status: 'В прокате',
-        date_start: '18.12.2022',
-        date_end: '21.01.2023',
-        date_rental: [
-            '15:00-16:30',
-            '12:00-13:30',
-            '12:00-13:30',
-            '19:00-20:30'
-        ]
-    },
-    {
-        id: 2,
-        title: 'title',
-        status: 'В прокате',
-        date_start: '18.12.2022',
-        date_end: '21.01.2023'
+defineProps({
+    rentFilms: {
+        type: Array,
+        required: true
     }
-];
+})
 </script>
 
 <style lang="scss" scoped>
@@ -85,7 +71,11 @@ const films = [
 
         padding: 8px 20px;
     }
-    
+
+    &__item {
+        cursor: pointer;
+    }
+
     &__date-rental {
         display: flex;
         flex-wrap: wrap;
