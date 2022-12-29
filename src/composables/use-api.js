@@ -26,7 +26,7 @@ export const useApiRequest = () => {
         },
         async requestById(path, id) {
             const docRef = doc(db, path, id)
-            const data = await getDoc(docRef).then(d => ({ uid: d.id, ...d.data() }))
+            const data = await getDoc(docRef).then(d => ({ ...d.data(), uid: d.id, }))
             return data
         },
         async create(path, data) {
