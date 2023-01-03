@@ -9,15 +9,17 @@ import FilmList from '@/components/Films/FilmList.vue';
 import { useRentFilms } from '@/composables/use-film-rent';
 import { useFilms } from "@/composables/use-films"
 import { onMounted, ref } from 'vue';
+import FilmRentModel from "@/models/use-film-rent-model"
+import useApi from "@/composables/use-api"
 
 const { films, fetchFilms } = useFilms()
-const { createRentFilm } = useRentFilms()
 
 const searchText = ref("")
 
 async function addRentFilm(data) {
-    console.log({...data})
-    await createRentFilm({...data})
+    const { addRentFilm } = useApi()
+
+    await addRentFilm(new FilmRentModel(data))
 }
 
 const handleSubmit = async () => {
