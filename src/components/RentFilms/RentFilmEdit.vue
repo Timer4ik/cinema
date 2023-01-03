@@ -73,10 +73,10 @@
             </div>
 
             <div class="edit__block_times">
-                <FieldComponent name="sessionFirst" type="time" label="Время сеанса 1" />
-                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2" />
-                <FieldComponent name="sessionThird" type="time" label="Время сеанса 3" />
-                <FieldComponent name="sessionFourth" type="time" label="Время сеанса 4" />
+                <FieldComponent name="sessionFirst" type="time" label="Время сеанса 1" :value="rentFilm?.sessionTimes?.[0]" />
+                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2" :value="rentFilm?.sessionTimes?.[1]" />
+                <FieldComponent name="sessionThird" type="time" label="Время сеанса 3" :value="rentFilm?.sessionTimes?.[2]" />
+                <FieldComponent name="sessionFourth" type="time" label="Время сеанса 4" :value="rentFilm?.sessionTimes?.[3]" />
             </div>
         </div>
 
@@ -86,11 +86,11 @@
             </div>
 
             <div class="edit__block_info">
-                <FieldComponent name="price" type="number" label="Цена" />
-                <FieldSelect name="status" label="Статус" :value="selectedOption?.rus" :options="filmStatus"
+                <FieldComponent name="price" type="number" label="Цена" :value="rentFilm?.price" />
+                <FieldSelect name="status" label="Статус" :value="rentFilm?.status ?? selectedOption?.rus" :options="filmStatus"
                     @selected="setSelected" @stateActive="state => isActiveSelect = state" :isActive="isActiveSelect">
                 </FieldSelect>
-                <FieldComponent name="description" label="Описание" />
+                <FieldComponent name="description" label="Описание" :value="rentFilm?.description" />
             </div>
         </div>
 
@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { useRentFilmById } from "@/composables/use-film-rent";
+import { useRentFilmById } from "@/composables/use-film-rent"
 import { Form } from "vee-validate"
 import * as Yup from "yup";
 import filmStatus from '@/utils/filmStatus'
@@ -109,6 +109,8 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCalendarDatePicker } from "@/composables/use-calendar-date-picker"
+import useApi from "@/composables/use-api"
+import FilmRentModel from "@/models/use-film-rent-model"
 
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 const isActiveCalendar = ref(false)
@@ -127,13 +129,7 @@ const { rentFilm, fetchRentFilmById, } = useRentFilmById()
 const route = useRoute()
 
 onMounted(async () => {
-    console.log(route.params.uid)
-
     await fetchRentFilmById(route.params.uid)
-
-    console.log(route.params.uid)
-
-    console.log(rentFilm)
 
     initCalendar((calendarCell) => {
 
@@ -194,14 +190,11 @@ const handleSubmit = async (values) => {
         description
     } = values
 
-    rentFilm.value = {
-        ...rentFilm.value,
-        ...vales
-    }
+    const data = {...rentFilm.value, ...values}
 
-    const { editRentFilm } = useApi()
+    const { updateRentFilm } = useApi()
 
-    await editRentFilm(new FilmRentModel(rentFilm.value))
+    await updateRentFilm(new FilmRentModel(data))
 };
 </script>
 
@@ -292,6 +285,12 @@ const handleSubmit = async (values) => {
 }
 
 .calendar {
+    background: white;
+
+    position: absolute;
+
+    z-index: 1000;
+
     &__inner {
         display: inline-flex;
         align-items: center;

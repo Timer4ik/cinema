@@ -8,9 +8,9 @@ export const useRentFilmById = () => {
     const fetchRentFilmById = async (uid) => {
         
 
-        const { getRentFilms } = useApi()
+        const { getRentFilmById } = useApi()
 
-        const data = await getRentFilms(['uid', '==', uid])
+        const data = await getRentFilmById(uid)
 
         console.log(data)
 

@@ -62,6 +62,10 @@ defineProps({
     type: Array,
     required: true
   },
+  checked: {
+    type: String,
+    required: false
+  },
 
   fieldClass: {
     type: String,
