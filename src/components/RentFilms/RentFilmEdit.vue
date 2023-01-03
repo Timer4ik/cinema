@@ -12,8 +12,10 @@
             </div>
 
             <div class="edit__block_dates" @click="isActiveCalendar = !isActiveCalendar">
-                <FieldComponent fieldClass="aboba" name="rentalStart" label="Дата начала проката" :value="startRange?.numericDate" readonly />
-                <FieldComponent name="rentalEnd" label="Дата конца проката" :value="endRangeDate?.numericDate" readonly />
+                <FieldComponent fieldClass="aboba" name="rentalStart" label="Дата начала проката"
+                    :value="startRange?.numericDate" readonly />
+                <FieldComponent name="rentalEnd" label="Дата конца проката" :value="endRangeDate?.numericDate"
+                    readonly />
             </div>
 
             <div class="calendar" v-if="isActiveCalendar">
@@ -49,16 +51,13 @@
                         </tr>
                         <tr v-for="row, idx in calendar.rows" :key="idx">
                             <td v-for="cell in row" :key="cell.id">
-                                <div class="cell"
-                                    :class="{
-                                        event: cell.isEvent,
-                                        notSelectedDate: cell.notThisMonth,
-                                        isRangeEndDate: cell.isRangeEndDate,
-                                        isRangeStartDate: cell.isRangeStartDate,
-                                        isRangeBetweenDate: cell.isRangeBetweenDate,
-                                    }"
-                                    @click="selectCellDate(cell.cellDate)"
-                                >
+                                <div class="cell" :class="{
+    event: cell.isEvent,
+    notSelectedDate: cell.notThisMonth,
+    isRangeEndDate: cell.isRangeEndDate,
+    isRangeStartDate: cell.isRangeStartDate,
+    isRangeBetweenDate: cell.isRangeBetweenDate,
+}" @click="selectCellDate(cell.cellDate)">
                                     {{ cell.cellDate.day }}
                                 </div>
                             </td>
@@ -102,7 +101,7 @@
 </template>
 
 <script setup>
-import { useRentFilms } from "@/composables/use-film-rent";
+import { useRentFilmById } from "@/composables/use-film-rent";
 import { Form } from "vee-validate"
 import * as Yup from "yup";
 import filmStatus from '@/utils/filmStatus'
@@ -110,7 +109,6 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCalendarDatePicker } from "@/composables/use-calendar-date-picker"
-import DateModel from "@/utils/date-model"
 
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 const isActiveCalendar = ref(false)
@@ -121,17 +119,21 @@ const endRange = ref("")
 const selectCellDate = (cellDate) => {
     selectRange(cellDate)
     startRange.value = startRangeDate.value
-    endRangeDate.value = endRangeDate.value
+    endRange.value = endRangeDate.value
 }
 
-const { rentFilm, fetchRentFilmById, editRentFilm } = useRentFilms()
+const { rentFilm, fetchRentFilmById, } = useRentFilmById()
 
 const route = useRoute()
 
 onMounted(async () => {
-    await fetchRentFilmById({
-        id: route.params.uid
-    })
+    console.log(route.params.uid)
+
+    await fetchRentFilmById(route.params.uid)
+
+    console.log(route.params.uid)
+
+    console.log(rentFilm)
 
     initCalendar((calendarCell) => {
 
@@ -192,7 +194,14 @@ const handleSubmit = async (values) => {
         description
     } = values
 
-    await editRentFilm(values)
+    rentFilm.value = {
+        ...rentFilm.value,
+        ...vales
+    }
+
+    const { editRentFilm } = useApi()
+
+    await editRentFilm(new FilmRentModel(rentFilm.value))
 };
 </script>
 
