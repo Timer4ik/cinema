@@ -7,7 +7,7 @@ export const useRentFilms = () => {
     const rentFilms = ref([])
     const rentFilm = ref({})
 
-    const fetchRentsFilm = async (condition) => {
+    const fetchRentFilms = async (condition) => {
 
         const { getRentFilms } = useApi()
 
@@ -18,7 +18,6 @@ export const useRentFilms = () => {
 
     const fetchRentFilmById = async ({id}) => {
         const { getRentFilmById } = useApi()
-
         const data = await getRentFilmById(id)
 
         rentFilm.value = new FilmRentModel(data)
@@ -42,7 +41,7 @@ export const useRentFilms = () => {
 
     return {
         rentFilms,
-        fetchRentsFilm,
+        fetchRentFilms,
         rentFilm,
         fetchRentFilmById,
         createRentFilm,

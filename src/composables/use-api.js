@@ -20,7 +20,7 @@ export const useApiRequest = () => {
             const querySnapshot = await getDocs(q);
 
             const data = querySnapshot.docs.map((d) => {
-                return { uid: d.id, ...d.data() }
+                return { ...d.data(),uid:d.id }
             });
             return data
         },
