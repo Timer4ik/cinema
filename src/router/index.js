@@ -10,42 +10,44 @@ import ApiTestPage from '@/pages/TestPages/ApiTestPage.vue'
 import GridTestPage from '@/pages/TestPages/GridTestPage.vue'
 import CalendarTestPage from '@/pages/TestPages/CalendarTestPage.vue'
 
+import FilmsCatalog from "@/pages/FilmsCatalog/FilmsCatalog.vue"
+
 const routes = [
     {
         path: '/',
         name: 'main',
+        component: FilmsCatalog,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
+        path: '/admin/films',
+        name: 'admin/films',
         component: Films,
         meta: {
             requiredAuth: false
         }
     },
     {
-        path: '/films',
-        name: 'films',
-        component: Films,
-        meta: {
-            requiredAuth: false
-        }
-    },
-    {
-        path: '/rentFilms',
-        name: 'rentFilms',
+        path: '/admin/rentFilms',
+        name: 'admin/rentFilms',
         component: RentFilms,
         meta: {
             requiredAuth: false
         }
     },
     {
-        path: '/rentFilmEdit/:uid',
-        name: 'rentFilmEdit',
+        path: '/admin/rentFilmEdit/:uid',
+        name: 'admin/rentFilmEdit',
         component: RentFilmEdit,
         meta: {
             requiredAuth: false
         }
     },
     {
-        path: '/seatsGrid',
-        name: 'seatsGrid',
+        path: '/admin/seatsGrid',
+        name: 'admin/seatsGrid',
         component: SeatsGrid,
         meta: {
             requiredAuth: false
