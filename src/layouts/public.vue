@@ -1,41 +1,43 @@
 <template>
-  <div class="wrapper">
-    <header class="header">
-      <h2 class="header__title title">MovieApp</h2>
-      <nav class="header__nav nav">
-        <ul class="nav__list list">
-          <li class="list__item item">
-            <a class="item__link link" href="#">Фильмы в прокате</a>
-          </li>
-          <li class="list__item item">
-            <a class="item__link link" href="#">Корзина</a>
-          </li>
-          <li class="list__item item" v-if="true">
-            <button class="button" @click="toggle()">Войти</button>
-          </li>
-          <li class="list__item item" v-else>
-            <button class="button" @click="() => {}">Выйти</button>
-            <!-- <Button @click="toggle()">Выйти</Button> -->
-          </li>
-        </ul>
-      </nav>
-      <Modal :isOpen="isOpen" >
-        <AuthComponent @onClose="toggle()"/>
-      </Modal>
-    </header>
+  <div class="public-layout">
+    <div class="wrapper">
+      <header class="header">
+        <h2 class="header__title title">MovieApp</h2>
+        <nav class="header__nav nav">
+          <ul class="nav__list list">
+            <li class="list__item item">
+              <a class="item__link link" href="#">Фильмы в прокате</a>
+            </li>
+            <li class="list__item item">
+              <a class="item__link link" href="#">Корзина</a>
+            </li>
+            <li class="list__item item" v-if="true">
+              <button class="button" @click="toggle()">Войти</button>
+            </li>
+            <li class="list__item item" v-else>
+              <button class="button" @click="() => {}">Выйти</button>
+              <!-- <Button @click="toggle()">Выйти</Button> -->
+            </li>
+          </ul>
+        </nav>
+        <Modal :isOpen="isOpen">
+          <AuthComponent @onClose="toggle()" />
+        </Modal>
+      </header>
 
-    <main class="main">
-      <slot />
-    </main>
+      <main class="main">
+        <slot />
+      </main>
 
-    <footer class="footer">Footer</footer>
+      <footer class="footer">Footer</footer>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Modal from "@/components/Modal/Modal.vue"
-import AuthComponent from "@/components/AuthComponent/AuthComponent.vue"
+import Modal from "@/components/Modal/Modal.vue";
+import AuthComponent from "@/components/AuthComponent/AuthComponent.vue";
 
 defineProps({
   title: {
@@ -48,11 +50,14 @@ const isOpen = ref(false);
 const toggle = () => {
   isOpen.value = !isOpen.value;
 };
-
 </script>
 
-
 <style scoped lang="scss">
+.public-layout {
+  width: 100%;
+  height: 100%;
+  background: black;
+}
 .wrapper {
   max-width: 1280px;
   width: 100%;
@@ -67,7 +72,6 @@ const toggle = () => {
     overflow: auto;
   }
 
-  background: black;
   color: white;
 }
 ul {
