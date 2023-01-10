@@ -12,9 +12,9 @@
             </div>
 
             <div class="edit__block_dates" @click="isActiveCalendar = !isActiveCalendar">
-                <FieldComponent fieldClass="aboba" name="startDate" label="Дата начала проката"
+                <FieldComponent fieldClass="aboba" name="rentEndDate" label="Дата начала проката"
                     :value="startRange?.numericDate" readonly />
-                <FieldComponent name="endDate" label="Дата конца проката" :value="endRangeDate?.numericDate"
+                <FieldComponent name="rentStartDate" label="Дата конца проката" :value="endRangeDate?.numericDate"
                     readonly />
             </div>
 
@@ -74,13 +74,13 @@
 
             <div class="edit__block_times">
                 <FieldComponent name="sessionFirst" type="time" label="Время сеанса 1"
-                    :value="rentFilm?.sessionTimes?.[0]" />
+                    :value="rentFilm?.sessions?.[0]" />
                 <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2"
-                    :value="rentFilm?.sessionTimes?.[1]" />
+                    :value="rentFilm?.sessions?.[1]" />
                 <FieldComponent name="sessionThird" type="time" label="Время сеанса 3"
-                    :value="rentFilm?.sessionTimes?.[2]" />
+                    :value="rentFilm?.sessions?.[2]" />
                 <FieldComponent name="sessionFourth" type="time" label="Время сеанса 4"
-                    :value="rentFilm?.sessionTimes?.[3]" />
+                    :value="rentFilm?.sessions?.[3]" />
             </div>
         </div>
 
@@ -124,8 +124,8 @@ const endRange = ref("")
 
 const selectCellDate = (cellDate) => {
     selectRange(cellDate)
-    startRange.value = startRangeDate.value
-    endRange.value = endRangeDate.value
+    startRange.value = startDate.value
+    endRange.value = endDate.value
 }
 
 const { rentFilm, fetchRentFilmById, } = useRentFilmById()
@@ -177,8 +177,8 @@ onMounted(async () => {
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Введите название"),
-    startDate: Yup.string().required("Введите дату начало проката"),
-    endDate: Yup.string().required("Введите дату окончание проката"),
+    rentEndDate: Yup.string().required("Введите дату начало проката"),
+    rentStartDate: Yup.string().required("Введите дату окончание проката"),
     sessionFirst: Yup.string().required("Введите время"),
     sessionSecond: Yup.string().required("Введите время"),
     sessionThird: Yup.string().required("Введите время"),
@@ -209,7 +209,7 @@ const handleSubmit = async (values) => {
 
     console.log(data)
 
-    //await updateRentFilm(new FilmRentModel(data))
+    await updateRentFilm(new FilmRentModel(data))
 };
 </script>
 

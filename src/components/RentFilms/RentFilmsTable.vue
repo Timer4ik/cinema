@@ -29,13 +29,13 @@
                     {{ filmStatus[rentFilm.status]?.rus }}
                 </td>
                 <td class="film__td">
-                    {{ rentFilm.startDate?.date ? rentFilm.startDate?.date : '' }}
+                    {{ rentFilm?.startDate?.numericDate }}
                     -
-                    {{ rentFilm.endDate?.date ? rentFilm.endDate?.date : '' }}
+                    {{ rentFilm?.endDate?.numericDate }}
                 </td>
                 <td class="film__td">
                     <ul class="film__date-rental">
-                        <li class="film__date-rental_item" v-for="dateRentail in rentFilm.sessionTimes">
+                        <li class="film__date-rental_item" v-for="dateRentail in rentFilm.sessions">
                             {{ dateRentail }}
                         </li>
                     </ul>
@@ -47,19 +47,12 @@
 
 <script setup>
 import filmStatus from '@/utils/filmStatus'
-import { onMounted } from 'vue';
 
 const props = defineProps({
     rentFilms: {
         type: Array,
         required: true
     }
-})
-
-onMounted(async () => {
-    setTimeout(() => {
-        console.log(props?.rentFilms)
-    }, 2500)
 })
 </script>
 
