@@ -2,12 +2,12 @@
     <aside class="navigation">
         <ul class="navigation__list list">
             <li class="list__item item">
-                <router-link :class="{ '_active': $route.path === '/' }" class="item__link" to="/">
+                <router-link :class="{ '_active': $route.path === '/admin/films' }" class="item__link" to='/admin/films'>
                     Фильмы
                 </router-link>
             </li>
             <li class="list__item">
-                <router-link :class="{ '_active': $route.path === '/rentFilms' }" class="item__link" to="/rentFilms">
+                <router-link :class="{ '_active': $route.path === '/admin/rentFilms' }" class="item__link" to='/admin/rentFilms'>
                     Фильмы в прокате
                 </router-link>
             </li>

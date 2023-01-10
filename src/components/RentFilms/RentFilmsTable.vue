@@ -18,7 +18,7 @@
                     Время проката
                 </th>
             </tr>
-            <tr class="film__item" v-for="rentFilm in rentFilms" @key="rentFilm.uid" @click="$router.push(`/rentFilmEdit/${rentFilm.uid}`)">
+            <tr class="film__item" v-for="rentFilm in rentFilms" @key="rentFilm.uid" @click="$router.push(`/admin/rentFilmEdit/${rentFilm.uid}`)">
                 <td class="film__td">
                     {{ rentFilm.uid }}
                 </td>
