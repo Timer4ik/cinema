@@ -22,6 +22,14 @@ const routes = [
         }
     },
     {
+        path: '/films/:id',
+        name: 'filmbyid',
+        component: FilmsCatalog,
+        meta: {
+            requiredAuth: false
+        }
+    },
+    {
         path: '/admin/films',
         name: 'admin/films',
         component: Films,

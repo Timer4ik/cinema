@@ -1,33 +1,38 @@
 <template>
   <div class="films">
-      <h1>Фильмы в прокате</h1>
-      <div class="films__list list flex-cards">
-        <div class="list__item item card" v-for="film in rentFilms" :key="film.id">
-          <div class="card__image">
-            <img class="image" :src="film.image.url" alt="Изображение" />
-          </div>
-          <div class="films__title">
-            {{ film.title }}
-            {{ film.year }}
-          </div>
+    <h1>Фильмы в прокате</h1>
+    <div class="films__list list flex-cards">
+      <router-link
+        :to="`/films/${film.uid}`"
+        class="list__item item card"
+        v-for="film in rentFilms"
+        :key="film.uid"
+        tag="div"
+      >
+        <div class="card__image">
+          <img class="image" :src="film.image.url" alt="Изображение" />
         </div>
-      </div>
+        <div class="films__title">
+          {{ film.title }}
+          {{ film.year }}
+        </div>
+      </router-link>
     </div>
+  </div>
 </template>
 
 <script setup>
-
 const props = defineProps({
   rentFilms: {
     type: Array,
   },
 });
-
 </script>
 
 <style lang="scss">
 .list__item {
   margin-bottom: 10px;
+  color:white;
 }
 .films__title {
   font-size: 18px;
