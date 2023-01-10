@@ -6,7 +6,6 @@
 
 <script setup>
 import FilmList from '@/components/Films/FilmList.vue';
-import { useRentFilms } from '@/composables/use-film-rent';
 import { useFilms } from "@/composables/use-films"
 import { onMounted, ref } from 'vue';
 import FilmRentModel from "@/models/use-film-rent-model"
@@ -22,14 +21,12 @@ async function addRentFilm(data) {
     await addRentFilm(new FilmRentModel(data))
 }
 
-const handleSubmit = async () => {
-  // await fetchFilms(["title", "==", searchText.value]);
-};
+// const handleSubmit = async () => {
+//   // await fetchFilms(["title", "==", searchText.value]);
+// };
 
 onMounted(async () => {
-  await fetchRentFilmById({id:"1be8InWuMuBbFUe26DiK"})
-
-  // await fetchRentFilms();
-  // await fetchRentFilms();
+  await fetchFilms()
+  console.log(films)
 });
 </script>
