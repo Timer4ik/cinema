@@ -28,7 +28,6 @@ export default () => {
                 seatsList.list.push(col)
             });
         });
-        console.log(seatsRow);
 
         await updateSeat(seatsList);
     }

@@ -1,18 +1,15 @@
 export default class DateModel {
 
     constructor(date) {
-        if (!date) {
+        if (!date)
             this.date = null;
-            return;
-        }
-
-        if (date instanceof DateModel)
+        else if (date instanceof DateModel)
             this.date = new Date(date.date)
         else
             this.date = new Date(date)
     }
 
-    isDateBetween(date1,date2){
+    isDateBetween(date1, date2) {
         return +date1?.date < +this.date && +this.date < +date2?.date
     }
 
@@ -60,7 +57,7 @@ export default class DateModel {
 
         let { day, monthIndex, year } = _date.getDateInfo()
 
-        _date.date.setFullYear( y || year ,  m || monthIndex ,  d || day )
+        _date.date.setFullYear(y || year, m || monthIndex, d || day)
 
         return _date
     }
@@ -68,7 +65,7 @@ export default class DateModel {
 
         let { day, monthIndex, year } = this.getDateInfo()
 
-        this.date.setFullYear( y || year ,  m || monthIndex ,  d || day )
+        this.date.setFullYear(y || year, m || monthIndex, d || day)
         return this
     }
 

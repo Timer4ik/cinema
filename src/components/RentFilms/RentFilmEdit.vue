@@ -12,9 +12,9 @@
             </div>
 
             <div class="edit__block_dates" @click="isActiveCalendar = !isActiveCalendar">
-                <FieldComponent fieldClass="aboba" name="rentalStart" label="Дата начала проката"
+                <FieldComponent fieldClass="aboba" name="startDate" label="Дата начала проката"
                     :value="startRange?.numericDate" readonly />
-                <FieldComponent name="rentalEnd" label="Дата конца проката" :value="endRangeDate?.numericDate"
+                <FieldComponent name="endDate" label="Дата конца проката" :value="endRangeDate?.numericDate"
                     readonly />
             </div>
 
@@ -52,12 +52,12 @@
                         <tr v-for="row, idx in calendar.rows" :key="idx">
                             <td v-for="cell in row" :key="cell.id">
                                 <div class="cell" :class="{
-    event: cell.isEvent,
-    notSelectedDate: cell.notThisMonth,
-    isRangeEndDate: cell.isRangeEndDate,
-    isRangeStartDate: cell.isRangeStartDate,
-    isRangeBetweenDate: cell.isRangeBetweenDate,
-}" @click="selectCellDate(cell.cellDate)">
+                                    event: cell.isEvent,
+                                    notSelectedDate: cell.notThisMonth,
+                                    isRangeEndDate: cell.isRangeEndDate,
+                                    isRangeStartDate: cell.isRangeStartDate,
+                                    isRangeBetweenDate: cell.isRangeBetweenDate,
+                                }" @click="selectCellDate(cell.cellDate)">
                                     {{ cell.cellDate.day }}
                                 </div>
                             </td>
@@ -73,10 +73,14 @@
             </div>
 
             <div class="edit__block_times">
-                <FieldComponent name="sessionFirst" type="time" label="Время сеанса 1" :value="rentFilm?.sessionTimes?.[0]" />
-                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2" :value="rentFilm?.sessionTimes?.[1]" />
-                <FieldComponent name="sessionThird" type="time" label="Время сеанса 3" :value="rentFilm?.sessionTimes?.[2]" />
-                <FieldComponent name="sessionFourth" type="time" label="Время сеанса 4" :value="rentFilm?.sessionTimes?.[3]" />
+                <FieldComponent name="sessionFirst" type="time" label="Время сеанса 1"
+                    :value="rentFilm?.sessionTimes?.[0]" />
+                <FieldComponent name="sessionSecond" type="time" label="Время сеанса 2"
+                    :value="rentFilm?.sessionTimes?.[1]" />
+                <FieldComponent name="sessionThird" type="time" label="Время сеанса 3"
+                    :value="rentFilm?.sessionTimes?.[2]" />
+                <FieldComponent name="sessionFourth" type="time" label="Время сеанса 4"
+                    :value="rentFilm?.sessionTimes?.[3]" />
             </div>
         </div>
 
@@ -86,8 +90,8 @@
             </div>
 
             <div class="edit__block_info">
-                <FieldComponent name="price" type="number" label="Цена" :value="rentFilm?.price" />
-                <FieldSelect name="status" label="Статус" :value="rentFilm?.status?.rus" :options="filmStatus"
+                <FieldComponent name="price" type="text" label="Цена" :value="rentFilm?.price" />
+                <FieldSelect name="status" label="Статус" :value="rentFilm?.status?.value" :options="getFilmStatus()"
                     @selected="setSelected" @stateActive="state => isActiveSelect = state" :isActive="isActiveSelect">
                 </FieldSelect>
                 <FieldComponent name="description" label="Описание" :value="rentFilm?.description" />
@@ -110,6 +114,7 @@ import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCalendarDatePicker } from "@/composables/use-calendar-date-picker"
 import useApi from "@/composables/use-api"
+import FilmRentModel from "@/models/use-film-rent-model";
 
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 const isActiveCalendar = ref(false)
@@ -127,8 +132,24 @@ const { rentFilm, fetchRentFilmById, } = useRentFilmById()
 
 const route = useRoute()
 
+function getFilmStatus() {
+    const data = []
+
+    for (let i = 0; i < Object.keys(filmStatus).length; i++) {
+        if (!filmStatus[i]) continue
+        data[i] = filmStatus[i]
+
+        if (!filmStatus[i]?.rus) continue
+        data[i].value = filmStatus[i].rus
+    }
+
+    return data
+}
+
 onMounted(async () => {
     await fetchRentFilmById(route.params.uid)
+
+    console.log(rentFilm?.value)
 
     initCalendar((calendarCell) => {
 
@@ -156,8 +177,8 @@ onMounted(async () => {
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Введите название"),
-    rentalStart: Yup.string().required("Введите дату начало проката"),
-    rentalEnd: Yup.string().required("Введите дату окончание проката"),
+    startDate: Yup.string().required("Введите дату начало проката"),
+    endDate: Yup.string().required("Введите дату окончание проката"),
     sessionFirst: Yup.string().required("Введите время"),
     sessionSecond: Yup.string().required("Введите время"),
     sessionThird: Yup.string().required("Введите время"),
@@ -176,24 +197,17 @@ const setSelected = (data) => {
 }
 
 const handleSubmit = async (values) => {
-    const {
-        name,
-        rentalStart,
-        rentalEnd,
-        sessionFirst,
-        sessionSecond,
-        sessionThird,
-        sessionFourth,
-        price,
-        status,
-        description
-    } = values
+    const updatedRentFilm = {
+        ...values,
+        status: rentFilm.value.status.id,
+        sessionTimes: [values?.sessionFirst, values?.sessionSecond, values?.sessionThird, values?.sessionFourth].join(",")
+    }
 
-    const data = {...rentFilm.value, ...values}
-
-    console.log(data)
+    const data = { ...rentFilm.value, ...updatedRentFilm }
 
     const { updateRentFilm } = useApi()
+
+    console.log(data)
 
     //await updateRentFilm(new FilmRentModel(data))
 };

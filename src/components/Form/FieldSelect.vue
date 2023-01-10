@@ -6,7 +6,7 @@
     :id="name"
     v-slot="{ field, errorMessage }"
   >
-    <div class="form__field field" :class="fieldClass" @click="clickSelect(isActive)">
+    <div class="form__field field" :class="fieldClass" @click="() => emit('stateActive', !isActive)">
       <label class="field__label" :class="{ error: errorMessage }">
         {{ label }}
       </label>
@@ -21,7 +21,7 @@
       <ul
         class="field__select"
         v-if="isActive"
-        v-click-away="() => clickSelect(true)"
+        v-click-away="() => emit('stateActive', true)"
       >
         <li
           class="field__option"
@@ -29,7 +29,7 @@
           @key="option.id"
           @click="clickOption(option)"
         >
-          {{ option.value }}
+          {{ option.rus }}
         </li>
       </ul>
 
@@ -78,14 +78,10 @@ defineProps({
   }
 });
 
-const clickSelect = (isActive) => {
-  emit('stateActive', !isActive)
-}
-
 const clickOption = (option) => {
   emit('selected', option)
   
-  clickSelect(false)
+  emit('stateActive', true)
 }
 </script>
 

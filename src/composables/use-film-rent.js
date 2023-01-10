@@ -6,13 +6,9 @@ export const useRentFilmById = () => {
     const rentFilm = ref({})
 
     const fetchRentFilmById = async (uid) => {
-        
-
         const { getRentFilmById } = useApi()
 
         const data = await getRentFilmById(uid)
-
-        console.log(data)
 
         rentFilm.value = new FilmRentModel(data)
     }
