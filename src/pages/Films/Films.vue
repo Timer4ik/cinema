@@ -18,6 +18,8 @@ const searchText = ref("");
 async function addRentFilm(data) {
     const { addRentFilm } = useApi()
 
+    data.status = 0
+
     await addRentFilm(new FilmRentModel(data))
 }
 
@@ -27,6 +29,5 @@ async function addRentFilm(data) {
 
 onMounted(async () => {
   await fetchFilms()
-  console.log(films)
 });
 </script>

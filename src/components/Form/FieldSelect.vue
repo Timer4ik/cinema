@@ -29,7 +29,7 @@
           @key="option.id"
           @click="clickOption(option)"
         >
-          {{ option.rus }}
+          {{ option.value }}
         </li>
       </ul>
 

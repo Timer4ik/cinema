@@ -26,7 +26,7 @@
                     {{ rentFilm.title }}
                 </td>
                 <td class="film__td">
-                    {{ rentFilm.status }}
+                    {{ filmStatus[rentFilm.status] }}
                 </td>
                 <td class="film__td">
                     {{ rentFilm.rentStartDate?.date ? rentFilm.rentStartDate?.date : '' }}
@@ -46,6 +46,8 @@
 </template>
 
 <script setup>
+import filmStatus from '@/utils/filmStatus'
+
 defineProps({
     rentFilms: {
         type: Array,

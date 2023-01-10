@@ -87,7 +87,7 @@
 
             <div class="edit__block_info">
                 <FieldComponent name="price" type="number" label="Цена" :value="rentFilm?.price" />
-                <FieldSelect name="status" label="Статус" :value="rentFilm?.status ?? selectedOption?.rus" :options="filmStatus"
+                <FieldSelect name="status" label="Статус" :value="rentFilm?.status?.rus" :options="filmStatus"
                     @selected="setSelected" @stateActive="state => isActiveSelect = state" :isActive="isActiveSelect">
                 </FieldSelect>
                 <FieldComponent name="description" label="Описание" :value="rentFilm?.description" />
@@ -110,7 +110,6 @@ import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCalendarDatePicker } from "@/composables/use-calendar-date-picker"
 import useApi from "@/composables/use-api"
-import FilmRentModel from "@/models/use-film-rent-model"
 
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 const isActiveCalendar = ref(false)
@@ -169,11 +168,11 @@ const ValidationSchema = Yup.object().shape({
 })
 
 const isActiveSelect = ref(false)
-const selectedOption = ref({})
 
 const setSelected = (data) => {
     isActiveSelect.value = false
-    selectedOption.value = data
+
+    rentFilm.value.status = data
 }
 
 const handleSubmit = async (values) => {
@@ -192,9 +191,11 @@ const handleSubmit = async (values) => {
 
     const data = {...rentFilm.value, ...values}
 
+    console.log(data)
+
     const { updateRentFilm } = useApi()
 
-    await updateRentFilm(new FilmRentModel(data))
+    //await updateRentFilm(new FilmRentModel(data))
 };
 </script>
 

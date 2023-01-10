@@ -1,6 +1,10 @@
 export default class DateModel {
 
     constructor(date) {
+        if (!date) {
+            this.date = null;
+            return;
+        }
 
         if (date instanceof DateModel)
             this.date = new Date(date.date)
