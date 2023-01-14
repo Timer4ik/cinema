@@ -26,10 +26,10 @@ export default class FilmRentModel extends FilmModel {
     }
 
     get startDate() {
-        return new DateModel(this.rentStartDate)
+        return new DateModel(DateModel.fromDMY(this.rentStartDate))
     }
 
     get endDate() {
-        return new DateModel(this.rentEndDate)
+        return new DateModel(DateModel.fromDMY(this.rentEndDate))
     }
 }

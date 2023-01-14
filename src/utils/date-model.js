@@ -31,6 +31,13 @@ export default class DateModel {
         return this
     }
 
+    static fromDMY(date) {
+        const splittedDate = date.split(".")
+        const normalDate = [splittedDate[1], splittedDate[0], splittedDate[2]].join(".")
+        console.log(normalDate);
+        return new Date(normalDate)
+    }
+
 
     static addYMD(date, y, m, d) {
 
