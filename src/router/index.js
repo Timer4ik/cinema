@@ -11,6 +11,7 @@ import GridTestPage from '@/pages/TestPages/GridTestPage.vue'
 import CalendarTestPage from '@/pages/TestPages/CalendarTestPage.vue'
 
 import FilmsCatalog from "@/pages/FilmsCatalog/FilmsCatalog.vue"
+import FilmInfo from "@/pages/FilmInfo/FilmInfo.vue"
 
 const routes = [
     {
@@ -24,7 +25,7 @@ const routes = [
     {
         path: '/films/:id',
         name: 'filmbyid',
-        component: FilmsCatalog,
+        component: FilmInfo,
         meta: {
             requiredAuth: false
         }

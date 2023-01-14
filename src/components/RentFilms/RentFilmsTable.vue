@@ -47,6 +47,7 @@
 
 <script setup>
 import filmStatus from '@/utils/filmStatus'
+import { onMounted } from '@vue/runtime-core'
 
 const props = defineProps({
     rentFilms: {
@@ -54,6 +55,7 @@ const props = defineProps({
         required: true
     }
 })
+
 </script>
 
 <style lang="scss" scoped>
