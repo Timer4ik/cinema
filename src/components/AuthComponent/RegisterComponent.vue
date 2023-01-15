@@ -1,22 +1,10 @@
 <template>
   <div class="auth">
     <div class="card">
-      <Form :validation-schema="() => {}" @submit="() => {}">
-        <FieldComponent
-          name="name"
-          placeholder="Введите имя пользователя"
-          label="Имя пользователя"
-        />
-        <FieldComponent
-          name="email"
-          placeholder="Введите e-mail"
-          label="E-mail"
-        />
-        <FieldComponent
-          name="password"
-          placeholder="Введите пароль"
-          label="Пароль"
-        />
+      <Form :validation-schema="registerValidationSchema" @submit="handleSubmit">
+        <FieldComponent name="name" placeholder="Введите имя пользователя" label="Имя пользователя" />
+        <FieldComponent name="email" placeholder="Введите e-mail" label="E-mail" />
+        <FieldComponent name="password" placeholder="Введите пароль" label="Пароль" />
         <button class="button">Зарегистироваться</button>
       </Form>
     </div>
@@ -26,26 +14,45 @@
 <script setup>
 import { Form } from "vee-validate";
 import FieldComponent from "@/components/Form/FieldComponent.vue";
+import useFirebaseAuth from "@/composables/use-firebase-auth";
+import * as Yup from 'yup'
+
+const { register } = useFirebaseAuth()
+
+const registerValidationSchema = Yup.object({
+  name: Yup.string().required("Введите ваше имя"),
+  email: Yup.string().email("Некорректная почта").required("Введите почту"),
+  password: Yup.string().required("Введите пароль")
+})
+
+const handleSubmit = async (values) => {
+  await register({ ...values })
+}
 </script>
 
 <style scoped lang="scss">
 .auth {
   width: 100%;
 }
+
 .card {
   padding-top: 50px;
 }
+
 body {
   background: #000;
 }
+
 .card__link {
   display: block;
   color: rgb(30, 30, 255);
   text-decoration: underline;
 }
+
 :deep(.form__field) {
   display: flex;
   flex-direction: column;
+
   .field__input {
     border: none;
     padding: 0;
@@ -92,6 +99,7 @@ body {
 
   transition: color, background 0.2s linear;
 }
+
 .button:hover {
   background: white;
   color: black;

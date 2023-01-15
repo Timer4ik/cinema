@@ -1,6 +1,6 @@
 import { db } from "@/utils/firebase"
 import getObjectFromModel from "@/utils/getObjectFromModel"
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where, limit } from "firebase/firestore"
 
 const PATHS = {
     FILMS: "films",
@@ -12,11 +12,11 @@ const PATHS = {
 
 export const useApiRequest = () => {
     return {
-        async request(path, condition) {
+        async request(path, condition, _limit) {
             // const q = query(collection(db,"cities"), where("capital", "==", true));
             let q = condition ?
-                query(collection(db, path), where(...condition)) :
-                query(collection(db, path))
+                query(collection(db, path), where(...condition), limit(_limit)) :
+                query(collection(db, path), limit(_limit))
             const querySnapshot = await getDocs(q);
 
             const data = querySnapshot.docs.map((d) => {
@@ -45,8 +45,8 @@ export default () => {
     const { request, requestById, create, update } = useApiRequest()
 
     return {
-        async getFilms(condition) {
-            return await request(PATHS.FILMS, condition)
+        async getFilms(condition, limit) {
+            return await request(PATHS.FILMS, condition, limit)
         },
         async getFilmById(id) {
             return await requestById(PATHS.FILMS, id)

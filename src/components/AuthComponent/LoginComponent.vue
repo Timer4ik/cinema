@@ -1,18 +1,10 @@
 <template>
   <div class="auth">
     <div class="card">
-      <Form :validation-schema="() => {}" @submit="() => {}">
-        <FieldComponent
-          name="email"
-          label="Email"
-          placeholder="Введите email"
-        />
-        <FieldComponent
-          name="password"
-          placeholder="Введите пароль"
-          label="Введите пароль"
-        />
-        <button class="button" type="button">Войти</button>
+      <Form :validation-schema="loginValidationSchema" @submit="handleSubmit">
+        <FieldComponent name="email" label="Email" placeholder="Введите email" />
+        <FieldComponent name="password" placeholder="Введите пароль" label="Введите пароль" />
+        <button class="button">Войти</button>
       </Form>
     </div>
   </div>
@@ -21,6 +13,19 @@
 <script setup>
 import FieldComponent from "@/components/Form/FieldComponent.vue";
 import { Form } from "vee-validate";
+import useFirebaseAuth from "@/composables/use-firebase-auth";
+import * as Yup from 'yup'
+
+const { login } = useFirebaseAuth()
+
+const loginValidationSchema = Yup.object({
+  email: Yup.string().email("Некорректная почта").required("Введите почту"),
+  password: Yup.string().required("Введите пароль")
+})
+
+const handleSubmit = async (values) => {
+  await login({ ...values })
+}
 </script>
 
 
@@ -28,20 +33,25 @@ import { Form } from "vee-validate";
 .auth {
   width: 100%;
 }
+
 .card {
   padding-top: 50px;
 }
+
 body {
   background: #000;
 }
+
 .card__link {
   display: block;
   color: rgb(30, 30, 255);
   text-decoration: underline;
 }
+
 :deep(.form__field) {
   display: flex;
   flex-direction: column;
+
   .field__input {
     border: none;
     padding: 0;
@@ -88,6 +98,7 @@ body {
 
   transition: color, background 0.2s linear;
 }
+
 .button:hover {
   background: white;
   color: black;

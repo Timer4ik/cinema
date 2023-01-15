@@ -11,11 +11,11 @@
             <li class="list__item item">
               <a class="item__link link" href="#">Корзина</a>
             </li>
-            <li class="list__item item" v-if="true">
+            <li class="list__item item" v-if="!getUser().isAuth">
               <button class="button" @click="toggle()">Войти</button>
             </li>
             <li class="list__item item" v-else>
-              <button class="button" @click="() => {}">Выйти</button>
+              <button class="button" @click="logout">Выйти</button>
               <!-- <Button @click="toggle()">Выйти</Button> -->
             </li>
           </ul>
@@ -38,6 +38,12 @@
 import { ref } from "vue";
 import Modal from "@/components/Modal/Modal.vue";
 import AuthComponent from "@/components/AuthComponent/AuthComponent.vue";
+import useUserStore from "@/composables/use-user-store";
+import useAuth from "@/composables/use-firebase-auth";
+import { onMounted } from "vue";
+
+const { getUser } = useUserStore()
+const { logout } = useAuth()
 
 defineProps({
   title: {
@@ -58,6 +64,7 @@ const toggle = () => {
   height: 100%;
   background: black;
 }
+
 .wrapper {
   max-width: 1280px;
   width: 100%;
@@ -67,6 +74,7 @@ const toggle = () => {
 
   display: flex;
   flex-direction: column;
+
   .main {
     flex: 1 1 auto;
     overflow: auto;
@@ -74,34 +82,42 @@ const toggle = () => {
 
   color: white;
 }
+
 ul {
   padding: 0;
   margin: 0;
   list-style: none;
+
   li {
     color: white;
   }
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .nav__list {
     display: flex;
     align-items: center;
+
     .list__item {
       margin-right: 25px;
       font-weight: 600;
       font-size: 18px;
+
       .item__link {
         color: white;
       }
+
       &:last-child {
         margin-right: 0;
       }
     }
   }
 }
+
 .title {
   font-size: 36px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -119,6 +135,7 @@ ul {
 
   transition: color, background 0.2s linear;
 }
+
 .button:hover {
   background: black;
   color: white;

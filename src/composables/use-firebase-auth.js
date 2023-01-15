@@ -9,6 +9,12 @@ const auth = getAuth();
 export default () => {
     const { getUser, clearUser, setUser } = useUserStore()
 
+    const checkAuth = () => {
+
+        const data = JSON.parse(localStorage.getItem("user"))
+        setUser(data)
+    }
+
     // TMP DEVFUNC
     const register = async ({ name, email, password }) => {
 
@@ -44,5 +50,5 @@ export default () => {
         console.log(getUser());
     }
 
-    return { login, register, logout, showAuth }
+    return { login, register, logout, showAuth, checkAuth }
 }

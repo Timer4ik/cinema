@@ -13,13 +13,14 @@ export default () => {
     }
 
     const setUser = (data) => {
-        user.isAuth = true
-        user.email = data.email
-        user.displayName = data.displayName
+        user.isAuth =!!data?.email
+        user.email = data?.email
+        user.displayName = data?.displayName
 
+        if (!user.isAuth) return
         localStorage.setItem("user",
             JSON.stringify({
-                email: data.email,
+                email: user.email,
                 displayName: user.displayName,
                 isAuth: true
             }))

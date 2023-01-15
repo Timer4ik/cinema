@@ -6,6 +6,11 @@
 // import { ref, onMounted, onUnmounted } from "vue"
 // import { onAuthStateChanged } from "firebase/auth"
 
+import { onMounted } from 'vue';
+import useAuth from "@/composables/use-firebase-auth"
+
+const {checkAuth} = useAuth()
+
 // import useUserStore from "./composables/use-user-store"
 // import { auth } from "./configs/db";
 
@@ -26,6 +31,9 @@
 //   clearUser()
 // })
 
+onMounted(() => {
+  checkAuth()
+})
 </script>
 
 <style lang="scss">

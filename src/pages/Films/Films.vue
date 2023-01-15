@@ -28,6 +28,6 @@ async function addRentFilm(data) {
 // };
 
 onMounted(async () => {
-  await fetchFilms()
+  await fetchFilms(6)
 });
 </script>
