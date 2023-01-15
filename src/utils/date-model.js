@@ -35,7 +35,7 @@ export default class DateModel {
         const splittedDate = date.split(".")
         const normalDate = [splittedDate[1], splittedDate[0], splittedDate[2]].join(".")
         console.log(normalDate);
-        return new Date(normalDate)
+        return new DateModel(normalDate)
     }
 
 

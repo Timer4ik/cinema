@@ -15,14 +15,14 @@ export default class FilmRentModel extends FilmModel {
 
         this.price = data.price
         // this._sessionTimes = "12:30,11:40"
-        this.sessionTimes = data.sessions
+        this.sessionTimes = data.sessionTimes
 
         // proccess | rent | closed 
         this.status = data.status
     }
 
     get sessions() {
-        return this._sessionTimes ? this._sessionTimes.split(",") : null
+        return this.sessionTimes ? this.sessionTimes.split(",") : null
     }
 
     get startDate() {

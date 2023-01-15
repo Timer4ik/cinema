@@ -12,9 +12,9 @@
             </div>
 
             <div class="edit__block_dates" @click="isActiveCalendar = !isActiveCalendar">
-                <FieldComponent fieldClass="aboba" name="rentEndDate" label="Дата начала проката"
-                    :value="startRange?.numericDate" readonly />
-                <FieldComponent name="rentStartDate" label="Дата конца проката" :value="endRangeDate?.numericDate"
+                <FieldComponent name="rentStartDate" label="Дата начала проката" :value="startRangeDate?.numericDate"
+                    readonly />
+                <FieldComponent name="rentEndDate" label="Дата конца проката" :value="endRangeDate?.numericDate"
                     readonly />
             </div>
 
@@ -57,7 +57,7 @@
                                     isRangeEndDate: cell.isRangeEndDate,
                                     isRangeStartDate: cell.isRangeStartDate,
                                     isRangeBetweenDate: cell.isRangeBetweenDate,
-                                }" @click="selectCellDate(cell.cellDate)">
+                                }" @click="selectRange(cell.cellDate)">
                                     {{ cell.cellDate.day }}
                                 </div>
                             </td>
@@ -90,8 +90,8 @@
             </div>
 
             <div class="edit__block_info">
-                <FieldComponent name="price" type="text" label="Цена" :value="rentFilm?.price" />
-                <FieldSelect name="status" label="Статус" :value="rentFilm?.status?.value" :options="getFilmStatus()"
+                <FieldComponent name="price" type="number" label="Цена" :value="rentFilm?.price" />
+                <FieldSelect name="status" label="Статус" :value="selectedStatus?.value" :options="getFilmStatus()"
                     @selected="setSelected" @stateActive="state => isActiveSelect = state" :isActive="isActiveSelect">
                 </FieldSelect>
                 <FieldComponent name="description" label="Описание" :value="rentFilm?.description" />
@@ -115,18 +115,10 @@ import { useRoute } from 'vue-router'
 import { useCalendarDatePicker } from "@/composables/use-calendar-date-picker"
 import useApi from "@/composables/use-api"
 import FilmRentModel from "@/models/use-film-rent-model";
+import DateModel from "@/utils/date-model";
 
 const { calendar, endRangeDate, selectRange, startRangeDate, initCalendar } = useCalendarDatePicker()
 const isActiveCalendar = ref(false)
-
-const startRange = ref("");
-const endRange = ref("")
-
-const selectCellDate = (cellDate) => {
-    selectRange(cellDate)
-    startRange.value = startDate.value
-    endRange.value = endDate.value
-}
 
 const { rentFilm, fetchRentFilmById, } = useRentFilmById()
 
@@ -148,8 +140,6 @@ function getFilmStatus() {
 
 onMounted(async () => {
     await fetchRentFilmById(route.params.uid)
-
-    console.log(rentFilm?.value)
 
     initCalendar((calendarCell) => {
 
@@ -173,12 +163,16 @@ onMounted(async () => {
 
         return calendarCell
     })
+
+    selectedStatus.value = filmStatus[rentFilm?.value?.status]
+    selectRange(DateModel.fromDMY(rentFilm?.value?.rentStartDate))
+    selectRange(DateModel.fromDMY(rentFilm?.value?.rentEndDate))
 })
 
 const ValidationSchema = Yup.object().shape({
     name: Yup.string().required("Введите название"),
-    rentEndDate: Yup.string().required("Введите дату начало проката"),
-    rentStartDate: Yup.string().required("Введите дату окончание проката"),
+    rentStartDate: Yup.string().required("Введите дату начало проката"),
+    rentEndDate: Yup.string().required("Введите дату окончание проката"),
     sessionFirst: Yup.string().required("Введите время"),
     sessionSecond: Yup.string().required("Введите время"),
     sessionThird: Yup.string().required("Введите время"),
@@ -189,25 +183,24 @@ const ValidationSchema = Yup.object().shape({
 })
 
 const isActiveSelect = ref(false)
+const selectedStatus = ref({})
 
-const setSelected = (data) => {
+const setSelected = data => {
     isActiveSelect.value = false
 
-    rentFilm.value.status = data
+    selectedStatus.value = data
 }
 
 const handleSubmit = async (values) => {
     const updatedRentFilm = {
         ...values,
-        status: rentFilm.value.status.id,
+        status: selectedStatus?.value?.id,
         sessionTimes: [values?.sessionFirst, values?.sessionSecond, values?.sessionThird, values?.sessionFourth].join(",")
     }
 
     const data = { ...rentFilm.value, ...updatedRentFilm }
 
     const { updateRentFilm } = useApi()
-
-    console.log(data)
 
     await updateRentFilm(new FilmRentModel(data))
 };
