@@ -4,28 +4,24 @@
       <div class="card__left">
         <img
           class="left__image"
-          :src="rentFilms[0]?.image.url"
+          :src="rentFilm?.image?.url"
           alt="Изображение"
         />
       </div>
       <div class="card__right">
         <h1 class="film__title">
-          {{ rentFilms[0]?.title }} {{ rentFilms[0]?.year }}
+          {{ rentFilm?.title }} {{ rentFilm?.year }}
         </h1>
         <div class="right__date">19.09.2002 - 18.10.2005</div>
         <div class="right__time">
           <ul>
-            <li>18:00</li>
-            <li>18:00</li>
-            <li>18:00</li>
-            <li>18:00</li>
+            <li v-for="(time,idx) in rentFilm.sessions" :key="idx">
+              {{ time }}
+            </li>
           </ul>
         </div>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
-          modi. Atque nihil, quasi quo ipsa saepe, at, inventore minima optio
-          officiis possimus cupiditate neque in obcaecati deleniti nostrum dolor
-          doloribus.
+          {{rentFilm.description}}
         </p>
         <div class="description__price price">1900 - 5000 рублей</div>
         <button class="buy">Купить билет</button>
@@ -35,13 +31,15 @@
 </template>
 
 <script setup>
-import { useRentFilms } from "@/composables/use-film-rent";
+import { useRentFilmById } from "@/composables/use-film-rent";
 import { onMounted } from "@vue/runtime-core";
+import {useRoute} from "vue-router"
 
-const { rentFilms, fetchRentsFilm } = useRentFilms();
+const { rentFilm,fetchRentFilmById  } = useRentFilmById();
+const route = useRoute() 
 
 onMounted(async () => {
-  await fetchRentsFilm();
+  await fetchRentFilmById(route.params.id);
 });
 </script>
 
@@ -97,13 +95,13 @@ onMounted(async () => {
         padding: 10px 30px;
         transition: all 0.2s linear;
         &:hover {
-        color: white;
-        background: rgb(50, 50, 50);
+          color: white;
+          background: rgb(50, 50, 50);
         }
       }
     }
     &__left {
-      flex: 1 1 50%;
+      flex: 0 0 30%;
       margin-right: 20px;
     }
   }
