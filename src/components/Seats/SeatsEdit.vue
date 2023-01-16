@@ -1,8 +1,26 @@
 <template>
   <div class="seat__status status">
-    <button class="status cheap">Бюджетное место</button>
-    <button class="status default">Стандартное место</button>
-    <button class="status premium">Премиум место</button>
+    <button
+      class="status cheap"
+      @click="setActiveButton(0)"
+      :class="{ active: seatStatus === SeatStatus.CHEAP.id }"
+    >
+      Бюджетное место
+    </button>
+    <button
+      class="status default"
+      @click="setActiveButton(1)"
+      :class="{ active: seatStatus === SeatStatus.STANDARD.id }"
+    >
+      Стандартное место
+    </button>
+    <button
+      class="status premium"
+      @click="setActiveButton(2)"
+      :class="{ active: seatStatus === SeatStatus.EXPENSIVE.id }"
+    >
+      Премиум место
+    </button>
   </div>
   <div class="cinema__main">
     <table class="cinema">
@@ -35,6 +53,7 @@
           <td v-for="seat in row" :key="seat.uid">
             <div
               class="cell"
+              @click="setSeatStatus(seat)"
               :class="{
                 default: seat.status === 1,
                 cheap: seat.status === 0,
@@ -111,15 +130,15 @@ onMounted(async () => {
   }
 
   &.default {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(41, 180, 134);
   }
   &.cheap {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(59, 59, 59);
   }
   &.premium {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(255, 239, 13);
   }
 }
@@ -142,16 +161,20 @@ onMounted(async () => {
     width: 200px;
     &.default {
       background-color: rgb(41, 180, 134);
-      opacity: 1;
+      opacity: 0.3;
     }
     &.cheap {
       background-color: rgb(59, 59, 59);
-      opacity: 1;
+      opacity: 0.3;
     }
     &.premium {
       color: black;
       background-color: rgb(255, 239, 13);
+      opacity: 0.3;
+    }
+    &.active {
       opacity: 1;
+      font-weight: bold;
     }
   }
 }

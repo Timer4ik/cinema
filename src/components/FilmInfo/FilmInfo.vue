@@ -28,6 +28,9 @@
           doloribus.
         </p>
         <div class="description__price price">1900 - 5000 рублей</div>
+
+        <SeatsGrid/>
+
         <button class="buy">Купить билет</button>
       </div>
     </div>
@@ -37,6 +40,7 @@
 <script setup>
 import { useRentFilms } from "@/composables/use-film-rent";
 import { onMounted } from "@vue/runtime-core";
+import SeatsGrid from '@/components/Seats/SeatsGrid.vue';
 
 const { rentFilms, fetchRentsFilm } = useRentFilms();
 
