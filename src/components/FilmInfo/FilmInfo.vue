@@ -24,6 +24,9 @@
           {{rentFilm.description}}
         </p>
         <div class="description__price price">1900 - 5000 рублей</div>
+
+        <SeatsGrid/>
+
         <button class="buy">Купить билет</button>
       </div>
     </div>
@@ -34,6 +37,7 @@
 import { useRentFilmById } from "@/composables/use-film-rent";
 import { onMounted } from "@vue/runtime-core";
 import {useRoute} from "vue-router"
+import SeatsGrid from '@/components/Seats/SeatsGrid.vue';
 
 const { rentFilm,fetchRentFilmById  } = useRentFilmById();
 const route = useRoute() 

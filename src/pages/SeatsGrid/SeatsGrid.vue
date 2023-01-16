@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import SeatsEdit from '@/components/Seats/SeatsGrid.vue';
+import SeatsEdit from '@/components/Seats/SeatsEdit.vue';
 </script>
