@@ -7,7 +7,8 @@ const PATHS = {
     RENT_FILMS: "films_rent",
     USERS: "users",
     SEATS: "seats",
-    RENT_FILM_SEAT:"rent_film_seat"
+    RENT_FILM_SEAT:"rent_film_seat",
+    RESERVE_SEATS:"reserve_seats"
 }
 
 export const useApiRequest = () => {
@@ -77,11 +78,17 @@ export default () => {
         async updateSeat(data) {
             return await update(PATHS.SEATS, data)
         },
+        // async reserveSeat(data){
+        //     return await create(PATHS.RENT_FILM_SEAT,data)
+        // },
+
 
         async reserveSeat(data){
-            return await create(PATHS.RENT_FILM_SEAT,data)
+            return await create(PATHS.RESERVE_SEATS,data)
+        },
+        async getReservedSeats(condition) {
+            return await request(PATHS.RENT_FILM_SEAT,condition)
         }
-
 
     }
 }

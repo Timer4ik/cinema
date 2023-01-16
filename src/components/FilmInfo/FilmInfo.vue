@@ -9,23 +9,25 @@
         />
       </div>
       <div class="card__right">
-        <h1 class="film__title">
-          {{ rentFilm?.title }} {{ rentFilm?.year }}
-        </h1>
+        <h1 class="film__title">{{ rentFilm?.title }} {{ rentFilm?.year }}</h1>
         <div class="right__date">19.09.2002 - 18.10.2005</div>
         <div class="right__time">
           <ul>
-            <li v-for="(time,idx) in rentFilm.sessions" :key="idx">
+            <li v-for="(time, idx) in rentFilm.sessions" :key="idx">
               {{ time }}
             </li>
           </ul>
         </div>
         <p>
-          {{rentFilm.description}}
+          {{ rentFilm.description }}
         </p>
         <div class="description__price price">1900 - 5000 рублей</div>
 
-        <SeatsGrid/>
+        <SeatsGrid
+          :handleSubmit="handleSubmit"
+          :handleSeatReserve="handleSeatReserve"
+          :seatsRows="seatsRows"
+        />
 
         <button class="buy">Купить билет</button>
       </div>
@@ -35,16 +37,49 @@
 
 <script setup>
 import { useRentFilmById } from "@/composables/use-film-rent";
-import { onMounted } from "@vue/runtime-core";
-import {useRoute} from "vue-router"
-import SeatsGrid from '@/components/Seats/SeatsGrid.vue';
+import { useRoute } from "vue-router";
+import SeatsGrid from "@/components/Seats/SeatsGrid.vue";
+import { onMounted, ref } from "vue";
+import SeatStatus from "@/utils/seatStatus";
+import useSeatsGrid from "@/composables/use-seats-grid";
+import useApi from "@/composables/use-api";
+import useReserveSeats from "@/composables/use-reserve-seats";
+import usePersonOrderModel from "@/models/use-person-order-model";
+import useUserStore from "@/composables/use-user-store"
 
-const { rentFilm,fetchRentFilmById  } = useRentFilmById();
-const route = useRoute() 
+const PersonOrderModel = usePersonOrderModel;
+const {getUser} = useUserStore()
+const { rentFilm, fetchRentFilmById } = useRentFilmById();
+const route = useRoute();
 
 onMounted(async () => {
   await fetchRentFilmById(route.params.id);
+  initSeatsGrid();
 });
+
+const { seatsRows, initSeatsGrid, setSeatStatus, seatStatus, setSeats } =
+  useSeatsGrid();
+
+const setActiveButton = (status) => {
+  seatStatus.value = status;
+};
+
+const handleSeatReserve = async (seat) => {
+  const { reserveSeat } = useReserveSeats();
+  const newOrder = new PersonOrderModel({
+    personUid: getUser().uid,
+    filmRendUid: route.params.id,
+    cinemaPlaceUid: seat.uid,
+  });
+
+  await reserveSeat(newOrder);
+};
+
+const handleSubmit = async () => {
+  const { updateSeat } = useApi();
+
+  await setSeats(seatsRows.value);
+};
 </script>
 
 <style lang="scss">

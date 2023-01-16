@@ -9,20 +9,22 @@ const user = reactive({
 export default () => {
 
     const getUser = () => {
-        return { email: user.email, isAuth: user.isAuth, displayName: user.displayName }
+        return { email: user.email, isAuth: user.isAuth, displayName: user.displayName,uid:user.uid }
     }
 
     const setUser = (data) => {
         user.isAuth =!!data?.email
         user.email = data?.email
         user.displayName = data?.displayName
+        user.uid= data?.uid
 
         if (!user.isAuth) return
         localStorage.setItem("user",
             JSON.stringify({
                 email: user.email,
                 displayName: user.displayName,
-                isAuth: true
+                isAuth: true,
+                uid:user.uid
             }))
     }
 

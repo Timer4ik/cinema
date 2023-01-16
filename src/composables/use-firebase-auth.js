@@ -35,8 +35,7 @@ export default () => {
         const userDoc = await getDoc(userDocRef)
 
         const user = userDoc.data()
-
-        setUser(user)
+        setUser({...user,uid:response.user.uid})
     }
 
     const logout = async () => {

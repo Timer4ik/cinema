@@ -35,10 +35,12 @@
           <td v-for="seat in row" :key="seat.uid">
             <div
               class="cell"
+              @click="handleSeatReserve(seat)"
               :class="{
                 default: seat.status === 1,
                 cheap: seat.status === 0,
                 premium: seat.status === 2,
+                reserved:seat?.reserved
               }"
             >
               {{ seat.col }}
@@ -52,27 +54,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import SeatStatus from "@/utils/seatStatus";
-import useSeatsGrid from "@/composables/use-seats-grid";
-import useApi from "@/composables/use-api";
+defineProps({
+  handleSubmit:Function,
+  handleSeatReserve:Function,
+  seatsRows:Array
+})
 
-const { seatsRows, initSeatsGrid, setSeatStatus, seatStatus, setSeats } =
-  useSeatsGrid();
-
-const setActiveButton = (status) => {
-  seatStatus.value = status;
-};
-
-const handleSubmit = async () => {
-  const { updateSeat } = useApi();
-
-  await setSeats(seatsRows.value);
-};
-
-onMounted(async () => {
-  initSeatsGrid();
-});
 </script>
 
 <style lang="scss" scoped>
@@ -111,16 +98,19 @@ onMounted(async () => {
   }
 
   &.default {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(41, 180, 134);
   }
   &.cheap {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(59, 59, 59);
   }
   &.premium {
-    opacity: 0.3;
+    opacity: 1;
     background-color: rgb(255, 239, 13);
+  }
+  &.reserved {
+    opacity: 0.3;
   }
 }
 
